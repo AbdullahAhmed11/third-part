@@ -202,14 +202,14 @@ useEffect(() => {
 
   return (
     <div className="flex flex-col gap-5">
-          <h2 className='text-[50px] font-bold'>Doctors / {doctor.doctorName}</h2>
+          <h2 className='text-[50px] font-bold'>Doctors / {doctor?.doctorName}</h2>
     <div className="w-full flex gap-5">
         <div className="w-1/3 flex flex-col gap-5">
             <div className="bg-white w-full flex items-center gap-5 p-5 rounded-lg shadow-md">
                {
-                doctor.imagePath ? (
+                doctor?.imagePath ? (
                     <img
-                    src={`https://thirdpartyy.runasp.net/${doctor.imagePath}`}
+                    src={`https://thirdpartyy.runasp.net/${doctor?.imagePath}`}
                     alt={doctor.doctorName}
                     className="w-24 h-24 rounded-full object-cover"
                 />
