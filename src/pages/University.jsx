@@ -20,6 +20,7 @@ import {
 } from '@mui/material';
 
 // import Dialog from '@mui/material/Dialog';
+
 const University = () => {
     const [all, setAll] = React.useState('');
     const [openAddDialog, setOpenAddDialog] = useState(false);

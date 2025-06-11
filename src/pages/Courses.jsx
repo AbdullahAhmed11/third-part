@@ -17,8 +17,9 @@ import {
     DialogTitle,  
     Dialog  
 } from '@mui/material';
-
+import {useNavigate} from 'react-router-dom';
 const Courses = () => {
+    const navigate = useNavigate();
     const [filter, setFilter] = useState('all');
     const [openAddDialog, setOpenAddDialog] = useState(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
@@ -28,6 +29,7 @@ const Courses = () => {
     const [filteredCourses, setFilteredCourses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [doctors, setDoctors] = React.useState([]);
 
     const handleOpenAddDialog = () => setOpenAddDialog(true);
     const handleCloseAddDialog = () => setOpenAddDialog(false);
@@ -191,6 +193,19 @@ const Courses = () => {
         return <div className='flex items-center justify-center text-[30px] text-red-500'>Error: {error}</div>;
     }
 
+    const getAlldoctors = async () => {
+        try{
+          const response = await axios.get(`https://thirdpartyy.runasp.net/api/Doctors/GetDoctors?page=1&size=10`);
+          setDoctors(response.data);
+          setLoading(false);
+          console.log("doctors fetched successfully:", response.data);
+        }catch (error) {
+          setLoading(false);
+          console.error("Error fetching doctors:", error);
+          setError("Failed to fetch doctors. Please try again later", error);
+        }
+    }
+
     return (
         <div className='flex flex-col gap-5'>
             <h2 className='text-[50px] font-bold'>Courses</h2>
@@ -222,6 +237,8 @@ const Courses = () => {
                             </Select>
                         </FormControl>
                     </Box>
+
+                    {/* implement doctor select here */}
                 </div>
                 <div>
                     <Button
@@ -253,7 +270,7 @@ const Courses = () => {
                     onRowClick={(row) => console.log('Row clicked:', row)}
                     onEdit={(row) => console.log('Edit:', row)}
                     onDelete={(row) => handleOpenDeleteDialog(row)}
-                    onView={(row) => console.log('View:', row)}
+                    onView={(row) => navigate(`/course/${row.id}`)}
                     selectable={false}
                 />
             </div>
