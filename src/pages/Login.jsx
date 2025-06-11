@@ -1,48 +1,71 @@
 import React, { useState } from 'react';
 import { TextField, Button, Snackbar, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Cookies from 'js-cookie'; // ✅ import js-cookie
 
 const Login = () => {
-  const [email, setEmail] = useState('');
+  const [emailOrPhone, setEmailOrPhone] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Check credentials
-    if (email === 'admin@gmail.com' && password === '123') {
-      navigate('/'); // Redirect to homepage
-    } else {
-      setError(true); // Show error
+
+    const formData = new FormData();
+    formData.append('PhoneOrEmail', emailOrPhone);
+    formData.append('Password', password);
+
+    try {
+      const response = await axios.post(
+        'https://thirdpartyy.runasp.net/api/Users/Login',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+
+      if (response.data) {
+        // ✅ Store token in cookies
+        Cookies.set('token', response.data, { expires: 7 }); // expires in 7 days
+
+        console.log('Login success, token:', response.data);
+        // Navigate to home or dashboard
+        navigate('/');
+      } else {
+        throw new Error('Token not found in response');
+      }
+    } catch (err) {
+      console.error('Login Failed:', err);
+      setErrorMessage('Invalid email/phone or password!');
+      setError(true);
     }
   };
 
   return (
     <div className='w-full h-screen flex'>
-      {/* Left Side (Pink Background) */}
+      {/* Left Side */}
       <div className='w-1/2 h-full bg-[#841A62]'></div>
 
-      {/* Right Side (Login Form) */}
+      {/* Right Side */}
       <div className='w-1/2 h-full bg-white flex items-center justify-center'>
         <div className='w-80'>
           <h1 className='text-3xl font-bold mb-6 text-center'>Login</h1>
-          
           <form onSubmit={handleSubmit}>
-            {/* Email Input */}
             <TextField
-              label="Email"
-              type="email"
+              label="Email or Phone"
+              type="text"
               fullWidth
               margin="normal"
               variant="outlined"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={emailOrPhone}
+              onChange={(e) => setEmailOrPhone(e.target.value)}
               required
             />
-
-            {/* Password Input */}
             <TextField
               label="Password"
               type="password"
@@ -53,8 +76,6 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-
-            {/* Submit Button */}
             <Button
               type="submit"
               fullWidth
@@ -70,14 +91,9 @@ const Login = () => {
             </Button>
           </form>
 
-          {/* Error Snackbar */}
-          <Snackbar
-            open={error}
-            autoHideDuration={3000}
-            onClose={() => setError(false)}
-          >
+          <Snackbar open={error} autoHideDuration={3000} onClose={() => setError(false)}>
             <Alert severity="error" onClose={() => setError(false)}>
-              Invalid email or password!
+              {errorMessage}
             </Alert>
           </Snackbar>
         </div>

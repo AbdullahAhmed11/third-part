@@ -15,24 +15,180 @@ import Chat from "./pages/Chat";
 import Rooms from "./pages/Rooms";
 import Articles from "./pages/Articles";
 import Students from "./pages/Students";
+import DoctorProfile from "./pages/DoctorProfile";
+import CourseLectures from "./pages/CourseLectures";
+import ExamView from "./pages/ExamView";
+import StudentView from "./pages/StudentView";
+import RequireAuth from "./component/RequireAuth";
 function App() {
   return (
     <>
     <Router>
+
+
       <Routes>
-        <Route path="/" element={ <Layout> <Home /> </Layout> } />
-        <Route path="/universities" element={ <Layout> <University /> </Layout> } />
-        <Route path="/doctors" element={ <Layout> <Doctors /> </Layout> } />
-        <Route path="/courses" element={ <Layout> <Courses /> </Layout> } />
-        <Route path="/exams" element={ <Layout> <Exams /> </Layout> } />
-        <Route path="/lectures" element={ <Layout> <Lectures /> </Layout> } />
-        <Route path="/qr-code" element={ <Layout> <QrCode /> </Layout> } />
-        <Route path="/ads" element={ <Layout> <Ads /> </Layout> } />
-        <Route path="/chat" element={ <Layout> <Chat /> </Layout> } />
-        <Route path="/rooms" element={ <Layout> <Rooms /> </Layout> } />
-        <Route path="/articles" element={ <Layout> <Articles /> </Layout> } />
-        <Route path="/students" element={ <Layout> <Students /> </Layout> } />
-        {/* Authentication Routes */}
+      <Route path="/" element={<RequireAuth>
+      <Layout>
+        <Home />
+      </Layout>
+    </RequireAuth>
+  }
+/>
+
+ <Route
+    path="/universities"
+    element={
+      <RequireAuth>
+        <Layout>
+          <University />
+        </Layout>
+      </RequireAuth>
+    }
+  />        
+<Route
+    path="/doctors"
+    element={
+      <RequireAuth>
+        <Layout>
+          <Doctors />
+        </Layout>
+      </RequireAuth>
+    }
+  />
+ <Route
+    path="/doctor/:id"
+    element={
+      <RequireAuth>
+        <Layout>
+          <DoctorProfile />
+        </Layout>
+      </RequireAuth>
+    }
+  />
+       <Route
+    path="/courses"
+    element={
+      <RequireAuth>
+        <Layout>
+          <Courses />
+        </Layout>
+      </RequireAuth>
+    }
+  />
+  <Route
+    path="/course/:id"
+    element={
+      <RequireAuth>
+        <Layout>
+          <CourseLectures />
+        </Layout>
+      </RequireAuth>
+    }
+  />
+        
+      <Route
+    path="/exams"
+    element={
+      <RequireAuth>
+        <Layout>
+          <Exams />
+        </Layout>
+      </RequireAuth>
+    }
+  />
+  <Route
+    path="/exam/:id"
+    element={
+      <RequireAuth>
+        <Layout>
+          <ExamView />
+        </Layout>
+      </RequireAuth>
+    }
+  />
+
+
+     <Route
+    path="/lectures"
+    element={
+      <RequireAuth>
+        <Layout>
+          <Lectures />
+        </Layout>
+      </RequireAuth>
+    }
+  />
+  <Route
+    path="/qr-code"
+    element={
+      <RequireAuth>
+        <Layout>
+          <QrCode />
+        </Layout>
+      </RequireAuth>
+    }
+  />
+  <Route
+    path="/ads"
+    element={
+      <RequireAuth>
+        <Layout>
+          <Ads />
+        </Layout>
+      </RequireAuth>
+    }
+  />
+  <Route
+    path="/chat"
+    element={
+      <RequireAuth>
+        <Layout>
+          <Chat />
+        </Layout>
+      </RequireAuth>
+    }
+  />
+     <Route
+    path="/rooms"
+    element={
+      <RequireAuth>
+        <Layout>
+          <Rooms />
+        </Layout>
+      </RequireAuth>
+    }
+  />
+  <Route
+    path="/articles"
+    element={
+      <RequireAuth>
+        <Layout>
+          <Articles />
+        </Layout>
+      </RequireAuth>
+    }
+  />
+  <Route
+    path="/students"
+    element={
+      <RequireAuth>
+        <Layout>
+          <Students />
+        </Layout>
+      </RequireAuth>
+    }
+  />
+  <Route
+    path="/student/:id"
+    element={
+      <RequireAuth>
+        <Layout>
+          <StudentView />
+        </Layout>
+      </RequireAuth>
+    }
+  />
+        
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>

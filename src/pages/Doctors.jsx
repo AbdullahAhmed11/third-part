@@ -17,8 +17,11 @@ import {
     DialogTitle,  
     Dialog  
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 const Doctors = () => {
+  const navigate = useNavigate();
+
         const [all, setAll] = React.useState('');
         const [openAddDialog, setOpenAddDialog] = useState(false);
         const [openEditDialog, setOpenEditDialog] = useState(false);
@@ -263,7 +266,8 @@ useEffect(() => {
                     showActions={true}
                     onRowClick={(row) => console.log('Row clicked:', row)}
                     onEdit={(row) => handleOpenEditDialog(row)}
-                    onDelete={(row) => handleOpenDeleteDialog(row)}                    onView={(row) => console.log('View:', row)}
+                    onDelete={(row) => handleOpenDeleteDialog(row)}                   
+                    onView={(row) => navigate(`/doctor/${row.id}`)}
                     selectable={false} // Set to true if you want to enable row selection
                   />
         </div>
@@ -295,41 +299,41 @@ useEffect(() => {
                      }
                     </Dialog>
 
-                          <Dialog
-                                    open={openDeleteDialog}
-                                    onClose={handleCloseDeleteDialog}
-                                    aria-labelledby="alert-dialog-title"
-                                    sx={{
-                                        '& .MuiDialog-paper': {
-                                            width: '600px',
-                                            maxWidth: '100%',
-                                        },
-                                    }}
-                                    aria-describedby="alert-dialog-description"
-                                >
-                                    <DialogTitle id="alert-dialog-title" sx={{ fontSize: '36px', fontWeight: 'bold' }}>
-                                          Delete Doctor
-                                    </DialogTitle>
-                                    <DialogContent>
-                                        <DialogContentText id="alert-dialog-description" sx={{ fontSize: '16px', fontWeight: '500', color: "#787878" }}>
-                                           Are you sure deleting this Doctor?
-                                        </DialogContentText>
-                                    </DialogContent>
-                                    <DialogActions sx={{ display: 'flex', justifyContent: 'center ', alignItems: "center", padding: '16px' }}>
-                                        <Button sx={{width: "192px", height: "50px", backgroundColor:"#fff", color: "black", border:"1px solid #000" }} onClick={handleCloseDeleteDialog} disabled={deleteLoading}>
-                                            Cancel
-                                        </Button>
-                                        <Button 
-                                            onClick={handleDeleteDoctor} 
-                                            color="error"
-                                            disabled={deleteLoading}
-                                            autoFocus
-                                            sx={{width: "192px", height: "50px", backgroundColor:"#F54135", color: "white", border:"1px solid #000" }}
-                                        >
-                                            {deleteLoading ? 'Deleting...' : 'Delete'}
-                                        </Button>
-                                    </DialogActions>
-                                </Dialog>
+                    <Dialog
+                              open={openDeleteDialog}
+                              onClose={handleCloseDeleteDialog}
+                              aria-labelledby="alert-dialog-title"
+                              sx={{
+                                  '& .MuiDialog-paper': {
+                                      width: '600px',
+                                      maxWidth: '100%',
+                                  },
+                              }}
+                              aria-describedby="alert-dialog-description"
+                          >
+                              <DialogTitle id="alert-dialog-title" sx={{ fontSize: '36px', fontWeight: 'bold' }}>
+                                    Delete Doctor
+                              </DialogTitle>
+                              <DialogContent>
+                                  <DialogContentText id="alert-dialog-description" sx={{ fontSize: '16px', fontWeight: '500', color: "#787878" }}>
+                                      Are you sure deleting this Doctor?
+                                  </DialogContentText>
+                              </DialogContent>
+                              <DialogActions sx={{ display: 'flex', justifyContent: 'center ', alignItems: "center", padding: '16px' }}>
+                                  <Button sx={{width: "192px", height: "50px", backgroundColor:"#fff", color: "black", border:"1px solid #000" }} onClick={handleCloseDeleteDialog} disabled={deleteLoading}>
+                                      Cancel
+                                  </Button>
+                                  <Button 
+                                      onClick={handleDeleteDoctor} 
+                                      color="error"
+                                      disabled={deleteLoading}
+                                      autoFocus
+                                      sx={{width: "192px", height: "50px", backgroundColor:"#F54135", color: "white", border:"1px solid #000" }}
+                                  >
+                                      {deleteLoading ? 'Deleting...' : 'Delete'}
+                                  </Button>
+                              </DialogActions>
+                    </Dialog>
     </div>
   )
 }

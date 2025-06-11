@@ -17,6 +17,8 @@ import {
     Dialog  
 } from '@mui/material';
 import AddExamForm from '../component/Exams/AddExamForm';
+import {useNavigate} from 'react-router-dom';
+
 const Exams = () => {
     const [filterStatus, setFilterStatus] = useState('all');
     const [exams, setExams] = useState([]);
@@ -24,7 +26,7 @@ const Exams = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [openAddDialog, setOpenAddDialog] = useState(false);
-    
+    const navigate = useNavigate();
     
     
     const handleOpenAddDialog = () => setOpenAddDialog(true);
@@ -111,6 +113,7 @@ const Exams = () => {
     };  
 
     // Apply filter based on status
+    
     const applyFilter = () => {
         if (filterStatus === 'all') {
             setFilteredExams(exams);
@@ -206,7 +209,7 @@ const Exams = () => {
                     onRowClick={(row) => console.log('Row clicked:', row)}
                     onEdit={(row) => console.log('Edit:', row)}
                     onDelete={(row) => console.log('Delete:', row)}
-                    onView={(row) => console.log('View:', row)}
+                    onView={(row) => navigate(`/exam/${row.id}`)}
                     selectable={false}
                 />
             </div>

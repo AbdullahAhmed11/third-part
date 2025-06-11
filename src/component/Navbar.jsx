@@ -1,7 +1,33 @@
 import { FaBars, FaSearch, FaGlobe } from 'react-icons/fa';
 import { MdArrowDropDown } from 'react-icons/md';
+import Cookies from 'js-cookie';
+import { jwtDecode } from "jwt-decode";
+
 
 export default function Navbar() {
+
+const getUserInfo = () => {
+  const token = Cookies.get('token');
+  if (!token) return null;
+
+  try {
+    const decoded = jwtDecode(token);
+
+    const name = decoded.Name;
+    const id = decoded.Id;
+    const role = decoded.Role;
+    const image = decoded.Image;
+
+    return { name, id, role, image };
+  } catch (error) {
+    console.error('Invalid token:', error);
+    return null;
+  }
+};
+
+const user = getUserInfo();
+
+
   return (
     <div className="w-full h-[60px] border border-gray-200 bg-white flex items-center px-4 shadow-md justify-between">
       {/* Left: Hamburger + Search */}
@@ -28,13 +54,13 @@ export default function Navbar() {
         </div>
 
         <img
-          src="/person.jpg"
+          src={`https://thirdpartyy.runasp.net${user?.image}`}
           alt="Profile"
           className="w-10 h-10 rounded-full cursor-pointer object-cover"
         />
         <div className="hidden sm:flex flex-col">
-          <span className="text-gray-800 font-semibold cursor-pointer">Mohamed</span>
-          <span className="text-gray-600 text-sm cursor-pointer">Profile</span>
+          <span className="text-gray-800 font-semibold cursor-pointer">{user?.name}</span>
+          <span className="text-gray-600 text-sm cursor-pointer">{user?.role}</span>
         </div>
       </div>
     </div>
