@@ -218,7 +218,7 @@ const columnsCourses = [
 
   return (
      <div className="flex flex-col gap-5">
-          <h2 className='text-[50px] font-bold'>Student / {student.name}</h2>
+          <h2 className='text-[50px] font-bold'>Student / {student?.name}</h2>
           <div className="flex gap-5 justify-end">
             <Button
               variant="contained"
