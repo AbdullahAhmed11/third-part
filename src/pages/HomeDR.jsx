@@ -8,11 +8,9 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 // import {jwt_decode }from 'jwt-decode';
 import { jwtDecode } from "jwt-decode";
-import { useTranslation } from 'react-i18next';
 
+const HomeDR = () => {
 
-const Home = () => {
-    const { t } = useTranslation();
     const [universities, setUniversities] = React.useState([]);
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = React.useState(true);
@@ -54,120 +52,6 @@ const Home = () => {
         return <div>Error: {error}</div>;
     }
 
-const columns = [
-  {
-    field: 'name',
-    headerName: 'University Name',
-    minWidth: 200,
-    sortable: true,
-    renderCell: (row) => (
-      <div style={{ fontWeight: 'bold' }}>
-        {row.name}
-      </div>
-    )
-  },
-    {
-    field: 'images',
-    headerName: 'Logo',
-    // align: 'center',
-    minWidth: 100,
-    renderCell: (row) => (
-      <img 
-        src={`${`https://thirdpartyy.runasp.net/`}${row.imagePath}`} 
-        alt={`${row.name} logo`} 
-        style={{ 
-          width: 50, 
-          height: 50, 
-          objectFit: 'contain',
-          borderRadius: '4px'
-        }} 
-      />
-    )
-  },
-  {
-    field: 'category',
-    headerName: 'Category',
-     align: 'center',
-    minWidth: 150,
-    sortable: true,
-    renderCell: (row) => (
-      <div >
-        {row.category}
-      </div>
-    )
-  },
-
-  {
-    field: 'courses',
-    headerName: 'Courses',
-    align: 'center',
-    minWidth: 120,
-    renderCell: (row) => (
-      <div>
-        <span>{row.courses}</span>
-      </div>
-    )
-  },
-
-];
-
-
- const CourseColumns = [
-        {
-            field: 'name',
-            headerName: 'University Name',
-            minWidth: 200,
-            sortable: true,
-            renderCell: (row) => (
-                <div style={{ fontWeight: 'bold' }}>
-                    {row.title}
-                </div>
-            )
-        },
-        {
-            field: 'images',
-            headerName: 'Logo',
-            minWidth: 100,
-            renderCell: (row) => (
-                <img 
-                    src={`${'https://thirdpartyy.runasp.net/'}${row.imagePath}`} 
-                    alt={`${row.name} logo`} 
-                    style={{ 
-                        width: 50, 
-                        height: 50, 
-                        objectFit: 'contain',
-                        borderRadius: '4px'
-                    }} 
-                />
-            )
-        },
-        {
-            field: 'University',
-            headerName: 'University',
-            align: 'center',
-            minWidth: 150,
-            sortable: true,
-            renderCell: (row) => (
-                <div>
-                    {row.universityName}
-                </div>
-            )
-        },
-        {
-            field: 'doctors',
-            headerName: 'Doctor',
-            align: 'center',
-            minWidth: 120,
-            renderCell: (row) => (
-                <div>
-                    <span>{row.doctorName}</span>
-                </div>
-            )
-        },
-   
-      
-    ];
-
 const getUserInfo = () => {
   const token = Cookies.get('token');
   if (!token) return null;
@@ -189,15 +73,10 @@ const getUserInfo = () => {
 
 const user = getUserInfo();
 
-if (user) {
-  console.log('Name:', user.name);
-  console.log('ID:', user.id);
-  console.log('Role:', user.role);
-  console.log('Image:', user.image);
-}
+
   return (
     <div className='flex flex-col gap-5'>
-      <h1 className='text-[50px] font-bold'><h1>{t('home.dashboard')}</h1></h1>
+      <h1 className='text-[50px] font-bold'>Dashboard</h1>
       <div className='grid grid-cols-4 gap-5'>
         <div className='bg-white p-5 flex justify-between rounded-lg shadow-md'>
           <div className='flex flex-col justify-between'>
@@ -241,44 +120,9 @@ if (user) {
         </div>
       </div>
 
-      <div className='w-full grid grid-cols-2 gap-5'>
-        <div className='w-full  bg-white rounded-lg shadow-md p-5 flex flex-col gap-5'>
-          <h2 className='text-[24px] font-bold'>universities</h2>
-         <div>
-          <DynamicTable
-            columns={columns}
-            data={universities}
-            showActions={false}
-            onRowClick={(row) => console.log('Row clicked:', row)}
-            // onEdit={(row) => handleOpenEditDialog(row)}
-            // onDelete={(row) => handleOpenDeleteDialog(row)}
-            onView={(row) => console.log('View:', row)}
-            showNotActive={true}
-            onNotActive={(row) => console.log('Marked as not active:', row)}
-            selectable={false} // Set to true if you want to enable row selection
-          />
-        </div>
-        </div>
-      <div className='w-full  bg-white rounded-lg shadow-md p-5 flex flex-col gap-5'>
-          <h2 className='text-[24px] font-bold'>Courses</h2>
-         <div>
-          <DynamicTable
-            columns={CourseColumns}
-            data={courses}
-            showActions={false}
-            onRowClick={(row) => console.log('Row clicked:', row)}
-            // onEdit={(row) => handleOpenEditDialog(row)}
-            // onDelete={(row) => handleOpenDeleteDialog(row)}
-            onView={(row) => console.log('View:', row)}
-            showNotActive={true}
-            onNotActive={(row) => console.log('Marked as not active:', row)}
-            selectable={false} // Set to true if you want to enable row selection
-          />
-        </div>
-        </div>
-      </div>
+
     </div>
   )
 }
 
-export default Home
+export default HomeDR

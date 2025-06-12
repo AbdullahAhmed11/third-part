@@ -83,7 +83,7 @@ const Students = () => {
             try {
                 setLoading(true);
                 const response = await axios.get(
-                    'https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=10&universityId=1&isActive=false'
+                    'https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20'
                 );
                 
                 const coursesData = response.data || [];
@@ -300,7 +300,7 @@ const columns = [
                                 <MenuItem value="">All Courses</MenuItem>
                                 {allCourses?.map((course) => (
                                     <MenuItem key={course.id} value={course.id}>
-                                        {course.name || `Course ${course.id}`}
+                                        {course.title || `Course ${course.id}`}
                                     </MenuItem>
                                 ))}
                             </Select>
