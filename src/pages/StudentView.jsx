@@ -261,11 +261,11 @@ const columnsCourses = [
               <div className="w-1/3 flex flex-col gap-5">
                 <div className="bg-white p-5 rounded-lg shadow-md flex items-center gap-5">
                   <div>
-                      <img src={`https://thirdpartyy.runasp.net${student.image}`} alt="Student" className="w-32 h-32 rounded-full" />
+                      <img src={`https://thirdpartyy.runasp.net${student?.image}`} alt="Student" className="w-32 h-32 rounded-full" />
                   </div>
                   <div className="flex flex-col gap-2">
-                      <span className="font-bold text-[16px]">{student.name}</span>
-                      <span className="font-bold text-[16px] text-[#787878]">{student.universityName}</span>
+                      <span className="font-bold text-[16px]">{student?.name}</span>
+                      <span className="font-bold text-[16px] text-[#787878]">{student?.universityName}</span>
                   </div>
                 </div>
 

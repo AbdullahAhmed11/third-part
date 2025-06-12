@@ -20,10 +20,33 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { CiLogout } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { jwtDecode } from "jwt-decode";
 
 export default function Sidebar({ isOpen, toggleSidebar }) {
   const location = useLocation();
   const navigate = useNavigate()
+
+  const getUserInfo = () => {
+    const token = Cookies.get('token');
+    if (!token) return null;
+  
+    try {
+      const decoded = jwtDecode(token);
+  
+      const name = decoded.Name;
+      const id = decoded.Id;
+      const role = decoded.Role;
+      const image = decoded.Image;
+  
+      return { name, id, role, image };
+    } catch (error) {
+      console.error('Invalid token:', error);
+      return null;
+    }
+  };
+  
+  const user = getUserInfo();
+
   // Map of sidebar items with their paths
   const sidebarItems = [
     { icon: <FaHome />, text: "Dashboard", path: "/" },
@@ -41,6 +64,16 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
     { icon: <FaQrcode />, text: "Qr Code", path: "/qr-code" },
     // { icon: <FaCog />, text: "Settings", path: "/settings" }
   ];
+
+  const doctorSidebar = [
+    { icon: <FaHome />, text: "Dashboard", path: "/homedr" },
+    { icon: <FaBook />, text: "Courses", path: "/coursesdr" },
+    { icon: <FaFileAlt />, text: "Exams", path: "/exams" },
+    { icon: <FaVideo />, text: "Lectures", path: "/lectures" },
+    { icon: <FaUserGraduate />, text: "Students", path: "/students" },
+    { icon: <FaNewspaper />, text: "Articles", path: "/articles" },
+    { icon: <FaQrcode />, text: "Qr Code", path: "/qr-code" },
+  ]
 
     const handleLogout = () => {
     Cookies.remove('token'); // delete token
@@ -89,7 +122,10 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
 
   {/* Sidebar Items with scroll */}
   <nav className="mt-6 overflow-y-auto flex-1">
-    {sidebarItems.map((item) => (
+    {
+      user?.role === "Doctor" ? (
+<>
+  {doctorSidebar.map((item) => (
       <SidebarItem 
         key={item.path}
         icon={item.icon}
@@ -99,6 +135,23 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
         isActive={location.pathname === item.path}
       />
     ))}
+</>
+      ) : (
+<>
+  {sidebarItems.map((item) => (
+      <SidebarItem 
+        key={item.path}
+        icon={item.icon}
+        text={item.text}
+        path={item.path}
+        isOpen={isOpen}
+        isActive={location.pathname === item.path}
+      />
+    ))}
+</>
+      )
+    }
+  
 
     <div onClick={handleLogout}  className='p-6 cursor-pointer flex items-center text-[#F54135] '>
       <span className="mr-4 text-xl"><CiLogout /></span>

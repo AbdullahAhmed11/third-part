@@ -1,0 +1,19 @@
+{
+  "dashboard": "Dashboard",
+  "totalStudents": "Total Students",
+  "studentsIncrease": "1.3% Up from past month",
+  "totalUniversities": "Total Universities",
+  "totalDoctors": "Total Doctors",
+  "totalCourses": "Total Courses",
+  "universities": "Universities",
+  "courses": "Courses",
+  "loadingUniversities": "Loading universities...",
+  "error": "Error",
+  "universityName": "University Name",
+  "logo": "Logo",
+  "category": "Category",
+  "courseCount": "Courses",
+  "courseTitle": "Course Title",
+  "university": "University",
+  "doctor": "Doctor"
+}

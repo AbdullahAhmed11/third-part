@@ -16,12 +16,14 @@ import {
     DialogTitle,  
     Dialog  
 } from '@mui/material';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { GrView } from "react-icons/gr";
+
 import AddCourseLectureForm from '../component/CourseLecture/AddCourseLectureForm';
 const CourseLectures = () => {
     const [all, setAll] = React.useState('');
     const [openAddDialog, setOpenAddDialog] = useState(false);
-    
+    const navigate = useNavigate()
     const handleOpenAddDialog = () => setOpenAddDialog(true);
     const handleCloseAddDialog = () => setOpenAddDialog(false);
 
@@ -176,18 +178,37 @@ const columns = [
 >
  Add Chapter
 </Button>
+<Button
+  variant="contained"
+  startIcon={<GrView />}
+  sx={{
+    backgroundColor: '#EFA61B',
+    width: '190px',
+    color: 'white',
+    marginLeft: "10px",
+    fontSize: '16px',
+    '&:hover': {
+      backgroundColor: '#d69519', // slightly darker on hover
+    },
+    textTransform: 'none', // prevents uppercase transformation
+    padding: '8px 16px', // adjust padding as needed
+  }}
+    href={`/courseStudents/${id}`}
+>
+View Students
+</Button>
             </div>
         </div>
         <div>
             <DynamicTable
             columns={columns}
             data={lectures}
-            showActions={false}
+            showActions={true}
             onRowClick={(row) => console.log('Row clicked:', row)}
-            onEdit={(row) => console.log('Row clicked:', row)}
-            onDelete={(row) => console.log('Row clicked:', row)}
-            onView={(row) => console.log('View:', row)}
-            showNotActive={true}
+            // onEdit={(row) => console.log('Row clicked:', row)}
+            // onDelete={(row) => console.log('Row clicked:', row)}
+            onView={(row) => navigate(`/lecture/${row?.id}`)}
+            showNotActive={false}
             onNotActive={(row) => console.log('Marked as not active:', row)}
             selectable={false} // Set to true if you want to enable row selection
             />

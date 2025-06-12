@@ -1,0 +1,19 @@
+{
+  "dashboard": "لوحة التحكم",
+  "totalStudents": "إجمالي الطلاب",
+  "studentsIncrease": "١.٣٪ زيادة عن الشهر الماضي",
+  "totalUniversities": "إجمالي الجامعات",
+  "totalDoctors": "إجمالي الأطباء",
+  "totalCourses": "إجمالي الدورات",
+  "universities": "الجامعات",
+  "courses": "الدورات",
+  "loadingUniversities": "جارٍ تحميل الجامعات...",
+  "error": "خطأ",
+  "universityName": "اسم الجامعة",
+  "logo": "الشعار",
+  "category": "الفئة",
+  "courseCount": "الدورات",
+  "courseTitle": "عنوان الدورة",
+  "university": "الجامعة",
+  "doctor": "الطبيب"
+}

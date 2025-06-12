@@ -20,6 +20,10 @@ import CourseLectures from "./pages/CourseLectures";
 import ExamView from "./pages/ExamView";
 import StudentView from "./pages/StudentView";
 import RequireAuth from "./component/RequireAuth";
+import HomeDR from "./pages/HomeDR";
+import CoursesDR from "./pages/CoursesDR";
+import LectureLesson from "./pages/LectureLesson";
+import StudetnsCourse from "./pages/StudetnsCourse";
 function App() {
   return (
     <>
@@ -27,13 +31,14 @@ function App() {
 
 
       <Routes>
-      <Route path="/" element={<RequireAuth>
-      <Layout>
-        <Home />
-      </Layout>
-    </RequireAuth>
-  }
-/>
+      <Route path="/" 
+        element={<RequireAuth>
+        <Layout>
+          <Home />
+        </Layout>
+      </RequireAuth>
+      }
+      />
 
  <Route
     path="/universities"
@@ -85,6 +90,18 @@ function App() {
       </RequireAuth>
     }
   />
+
+
+    <Route
+    path="/courseStudents/:id"
+    element={
+      <RequireAuth>
+        <Layout>
+          <StudetnsCourse/>
+        </Layout>
+      </RequireAuth>
+    }
+  />
         
       <Route
     path="/exams"
@@ -118,6 +135,18 @@ function App() {
       </RequireAuth>
     }
   />
+     <Route
+    path="/lecture/:id"
+    element={
+      <RequireAuth>
+        <Layout>
+          <LectureLesson/>
+        </Layout>
+      </RequireAuth>
+    }
+  />
+
+
   <Route
     path="/qr-code"
     element={
@@ -191,6 +220,27 @@ function App() {
         
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
+        {/* dr role  */}
+      <Route path="/homedr" 
+        element={<RequireAuth>
+        <Layout>
+          <HomeDR />
+        </Layout>
+      </RequireAuth>
+      }
+      />
+
+             <Route
+    path="/coursesdr"
+    element={
+      <RequireAuth>
+        <Layout>
+        <CoursesDR/>
+        </Layout>
+      </RequireAuth>
+    }
+  />
       </Routes>
     </Router>
     

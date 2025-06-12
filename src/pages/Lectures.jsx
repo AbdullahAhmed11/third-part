@@ -62,11 +62,11 @@ const Lectures = () => {
             try {
                 setLoading(true);
                 const response = await axios.get(
-                    'https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=10&universityId=1&isActive=false'
+                    'https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20'
                 );
                 
                 // Add console log to check API response structure
-                console.log('API Response:', response.data);
+                console.log('API Response:dd', response.data);
                 
                 // Adjust based on actual API response
                 const coursesData =  response.data || [];
@@ -230,7 +230,7 @@ const columns = [
                         >
                      {all?.map((course) => (
                         <MenuItem key={course.id} value={course.id}>
-                            {course.name || `Course ${course.id}`}
+                            {course.title || `Course ${course.id}`}
                         </MenuItem>
                      ))}
                         </Select>
