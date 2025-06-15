@@ -15,8 +15,33 @@ import {
     InputLabel,
     Alert
 } from '@mui/material';
+import Cookies from 'js-cookie';
+import { jwtDecode } from "jwt-decode";
 
-const AddLectureForm = ({ onClose, onSuccess }) => {
+const AddLectureForm = ({ onClose, onSuccess, selectedCourse }) => {
+
+        const getUserInfo = () => {
+          const token = Cookies.get('token');
+          if (!token) return null;
+        
+          try {
+            const decoded = jwtDecode(token);
+        
+            const name = decoded.Name;
+            const id = decoded.Id;
+            const role = decoded.Role;
+            const image = decoded.Image;
+        
+            return { name, id, role, image };
+          } catch (error) {
+            console.error('Invalid token:', error);
+            return null;
+          }
+        };
+        
+        const user = getUserInfo();
+        
+
     const [loading, setLoading] = useState(false);
     const [coursesLoading, setCoursesLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -64,7 +89,7 @@ const AddLectureForm = ({ onClose, onSuccess }) => {
         try {
             const lectureData = {
                 title: formData.title,
-                courseId: formData.courseId,
+                courseId: user?.role === "Doctor" ? selectedCourse : formData.courseId,
                 isActive: formData.isActive,
             };
 

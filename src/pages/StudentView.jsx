@@ -301,7 +301,7 @@ const columnsCourses = [
                           aria-describedby="alert-dialog-description"
                       >
                           <DialogTitle id="alert-dialog-title" sx={{ fontSize: '36px', fontWeight: 'bold' }}>
-                               {student.name} - Image Id
+                               {student?.name} - Image Id
                           </DialogTitle>
                           <DialogContent>
                               <DialogContentText id="alert-dialog-description" sx={{ fontSize: '16px', fontWeight: '500', color: "#787878" }}>

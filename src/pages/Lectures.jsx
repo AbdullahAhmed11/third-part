@@ -18,7 +18,36 @@ import {
 } from '@mui/material';
 import AddLectureForm from '../component/lectures/AddLectureForm';
 import EditLectureForm from '../component/lectures/EditLectureForm';
+import Cookies from 'js-cookie';
+import { jwtDecode } from "jwt-decode";
+
 const Lectures = () => {
+
+const getUserInfo = () => {
+  const token = Cookies.get('token');
+  if (!token) return null;
+
+  try {
+    const decoded = jwtDecode(token);
+
+    const name = decoded.Name;
+    const id = decoded.Id;
+    const role = decoded.Role;
+    const image = decoded.Image;
+
+    return { name, id, role, image };
+  } catch (error) {
+    console.error('Invalid token:', error);
+    return null;
+  }
+};
+
+const user = getUserInfo();
+
+
+
+
+
     const [selectedCourse, setSelectedCourse] = useState('');
     const [all, setAll] = React.useState([]);
     const [loading, setLoading] = useState(false);
@@ -59,11 +88,15 @@ const Lectures = () => {
 
     useEffect(() => {
         const fetchCourses = async () => {
+            console.log(user.id)
             try {
                 setLoading(true);
-                const response = await axios.get(
-                    'https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20'
-                );
+           const endpoint =
+        user.role === 'Doctor'
+          ? `https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20&doctorId=${user.id}`
+          : `https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20`;
+
+      const response = await axios.get(endpoint);
                 
                 // Add console log to check API response structure
                 console.log('API Response:dd', response.data);
@@ -284,6 +317,7 @@ const columns = [
                       <AddLectureForm 
                           onClose={handleCloseAddDialog}
                           onSuccess={handleLectureAdded}
+                          selectedCourse={selectedCourse}
                       />
                  </Dialog>
                     <Dialog
@@ -335,7 +369,7 @@ const columns = [
                                               {deleteLoading ? 'Deleting...' : 'Delete'}
                                           </Button>
                                       </DialogActions>
-                                  </Dialog>
+                              </Dialog>
     </div>
   )
 }

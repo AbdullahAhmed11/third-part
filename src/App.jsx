@@ -24,6 +24,7 @@ import HomeDR from "./pages/HomeDR";
 import CoursesDR from "./pages/CoursesDR";
 import LectureLesson from "./pages/LectureLesson";
 import StudetnsCourse from "./pages/StudetnsCourse";
+import DoctorStudents from "./pages/DoctorStudents";
 function App() {
   return (
     <>
@@ -203,6 +204,16 @@ function App() {
       <RequireAuth>
         <Layout>
           <Students />
+        </Layout>
+      </RequireAuth>
+    }
+  />
+  <Route
+    path="/doctor-students"
+    element={
+      <RequireAuth>
+        <Layout>
+          <DoctorStudents />
         </Layout>
       </RequireAuth>
     }

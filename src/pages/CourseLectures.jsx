@@ -133,7 +133,7 @@ const columns = [
             <div className='flex items-center gap-8'>
                 <GrFilter className='text-[30px] text-black' />
                 <span className='text-[20px] font-bold'>Filter</span>
-                 <Box sx={{ minWidth: 120 }}>
+                 {/* <Box sx={{ minWidth: 120 }}>
                     <FormControl fullWidth>
                         <InputLabel id="demo-simple-select-label">Age</InputLabel>
                         <Select
@@ -156,7 +156,7 @@ const columns = [
                         <MenuItem value={30}>Thirty</MenuItem>
                         </Select>
                     </FormControl>
-                </Box>
+                </Box> */}
             </div>
             <div>
             

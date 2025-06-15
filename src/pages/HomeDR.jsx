@@ -8,13 +8,29 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 // import {jwt_decode }from 'jwt-decode';
 import { jwtDecode } from "jwt-decode";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from '@mui/material';
+import { RxCheck } from "react-icons/rx";
+import { VscClose } from "react-icons/vsc";
+import { ToastContainer, toast } from 'react-toastify';
+
+
 
 const HomeDR = () => {
 
     const [universities, setUniversities] = React.useState([]);
+    const [dashData, setDashData] = useState(null)
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState(null);
+    const [courseRequest, setCourseRequest] = useState([])
     const getAllUniversity = async () => {
         try{
           const response = await axios.get(`https://thirdpartyy.runasp.net/api/Universities/GetUniversities`);
@@ -38,10 +54,40 @@ const HomeDR = () => {
             console.error("Error fetching courses:", error);
         }
     };
+
+
+    const getDashData = async () => {
+        try {
+            const response = await axios.get(`https://thirdpartyy.runasp.net/api/Admins/GetStatisticsForAdmin`);
+            setDashData(response.data);
+            setLoading(false);
+            console.log("data fetched successfully:", response.data);
+        } catch (error) {
+            setError(error.message);
+            setLoading(false);
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    const getCourseRequests = async () => {
+        try {
+            const response = await axios.get(`https://thirdpartyy.runasp.net/api/CourseRequests/GetCourseRequests?page=1&size=30`);
+            setCourseRequest(response.data);
+            setLoading(false);
+            console.log("data fetched successfully:", response.data);
+        } catch (error) {
+            setError(error.message);
+            setLoading(false);
+            console.error("Error fetching data:", error);
+        }
+    };
+
     useEffect(() => {
         setLoading(true); 
         getAllUniversity();
         getAllCourses();
+        getDashData();
+        getCourseRequests();
     }, []);
 
   if (loading) {
@@ -72,6 +118,27 @@ const getUserInfo = () => {
 };
 
 const user = getUserInfo();
+const handleAccept = async (id) => {
+  try {
+    await axios.post('https://thirdpartyy.runasp.net/api/CourseRequests/AcceptRequest', { id });
+    toast.success('Request accepted!');
+    getCourseRequests(); // refresh
+  } catch (err) {
+    toast.error('Failed to accept request');
+    console.error(err);
+  }
+};
+
+const handleReject = async (id) => {
+  try {
+    await axios.delete(`https://thirdpartyy.runasp.net/api/CourseRequests/DeleteRequest?id=${id}`);
+    toast.success('Request rejected!');
+    getCourseRequests(); // refresh
+  } catch (err) {
+    toast.error('Failed to reject request');
+    console.error(err);
+  }
+};
 
 
   return (
@@ -81,7 +148,7 @@ const user = getUserInfo();
         <div className='bg-white p-5 flex justify-between rounded-lg shadow-md'>
           <div className='flex flex-col justify-between'>
             <p className='font-meduim text-[16px] text-[#202224]'>Total Students</p>
-            <p className='font-bold text-[24px] text-[#202224]'>40,689</p>
+            <p className='font-bold text-[24px] text-[#202224]'>{dashData?.students}</p>
             <p className='font-bold text-[20px] text-[#202224]'>1.3% Up from past month</p>
           </div>
           <div className='bg-[#8280FF] w-[60px] h-[60px] rounded-[16px] flex items-center justify-center'>
@@ -91,7 +158,7 @@ const user = getUserInfo();
         <div className='bg-white p-5 flex justify-between rounded-lg shadow-md'>
           <div className='flex flex-col justify-between'>
             <p className='font-meduim text-[16px] text-[#202224]'>Total universities</p>
-            <p className='font-bold text-[24px] text-[#202224]'>24</p>
+            <p className='font-bold text-[24px] text-[#202224]'>{dashData?.universities}</p>
             <p className='font-bold text-[20px] text-[#202224]'>1.3% Up from past month</p>
           </div>
           <div className='bg-[] w-[60px] h-[60px] rounded-[16px] flex items-center justify-center'>
@@ -101,7 +168,7 @@ const user = getUserInfo();
         <div className='bg-white p-5 flex justify-between rounded-lg shadow-md'>
           <div className='flex flex-col justify-between'>
             <p className='font-meduim text-[16px] text-[#202224]'>Total Doctors</p>
-            <p className='font-bold text-[24px] text-[#202224]'>401</p>
+            <p className='font-bold text-[24px] text-[#202224]'>{dashData?.doctors}</p>
             <p className='font-bold text-[20px] text-[#202224]'>1.3% Up from past month</p>
           </div>
           <div className='bg-[] w-[60px] h-[60px] rounded-[16px] flex items-center justify-center'>
@@ -111,7 +178,7 @@ const user = getUserInfo();
         <div className='bg-white p-5 flex justify-between rounded-lg shadow-md'>
           <div className='flex flex-col justify-between'>
             <p className='font-meduim text-[16px] text-[#202224]'>Total Courses</p>
-            <p className='font-bold text-[24px] text-[#202224]'>123</p>
+            <p className='font-bold text-[24px] text-[#202224]'>{dashData?.courses}</p>
             <p className='font-bold text-[20px] text-[#202224]'>1.3% Up from past month</p>
           </div>
           <div className='bg-[] w-[60px] h-[60px] rounded-[16px] flex items-center justify-center'>
@@ -120,7 +187,46 @@ const user = getUserInfo();
         </div>
       </div>
 
+      <div className='w-full flex gap-5'>
+        <div className='w-1/2 flex flex-col p-4 bg-white h-[500px] rounded-lg shadow-md'>
+        <h2 className='text-[50px] font-bold'>Courses Requests</h2>
+ <TableContainer component={Paper} sx={{ maxHeight: 400 }}>
+    <Table stickyHeader>
+      <TableHead>
+        <TableRow>
+          <TableCell><strong>Course</strong></TableCell>
+          <TableCell><strong>Students</strong></TableCell>
+          <TableCell><strong>Date</strong></TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {courseRequest?.map((request, index) => (
+          <TableRow key={request.id}>
+            <TableCell>{request.title || 'N/A'}</TableCell>
+            <TableCell>{request.name || request.students?.length || 'N/A'}</TableCell>
+            <TableCell>{new Date(request.date || request.requestDate).toLocaleDateString()}</TableCell>
+            <TableCell    onClick={() => handleAccept(request.id)}>
+              <div className='w-[30px] cursor-pointer h-[30px] rounded-full border-2 border-[#1A843C] flex items-center justify-center'>
+                <RxCheck className='text-3xl text-[#1A843C]'/>
+              </div>
+            </TableCell>
+            <TableCell     onClick={() => handleReject(request.id)}>
+                <div className='w-[30px] h-[30px] cursor-pointer  rounded-full border-2 border-[#F54135] flex items-center justify-center'>
+                <VscClose className='text-3xl text-[#F54135]'/>
+              </div>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  </TableContainer>
+        </div>
+        <div className='w-1/2 bg-white h-[500px] rounded-lg shadow-md'>
 
+        </div>
+      </div>
+
+<ToastContainer/>
     </div>
   )
 }

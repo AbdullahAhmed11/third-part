@@ -18,13 +18,42 @@ import {
 } from '@mui/material';
 import EditStudentForm from '../component/students/EditStudentForm';
 import AddStudentForm from '../component/students/AddStudentForm';
+import Cookies from 'js-cookie';
+import { jwtDecode } from "jwt-decode";
+
+
 import { useNavigate } from 'react-router-dom';
 const Students = () => {
+
+const getUserInfo = () => {
+  const token = Cookies.get('token');
+  if (!token) return null;
+
+  try {
+    const decoded = jwtDecode(token);
+
+    const name = decoded.Name;
+    const id = decoded.Id;
+    const role = decoded.Role;
+    const image = decoded.Image;
+
+    return { name, id, role, image };
+  } catch (error) {
+    console.error('Invalid token:', error);
+    return null;
+  }
+};
+
+const user = getUserInfo();
+
+
+
     const navigate = useNavigate();
     const [all, setAll] = useState([]);
     const [allCourses, setAllCourses] = useState([]);
     const [selectedCourse, setSelectedCourse] = useState('');
     const [students, setStudents] = useState([]);
+    const [studentsCourse, setStudentsCourse] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [pagination, setPagination] = useState({
@@ -82,9 +111,12 @@ const Students = () => {
         const fetchCourses = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get(
-                    'https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20'
-                );
+                 const endpoint =
+        user.role === 'Doctor'
+          ? `https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20&doctorId=${user.id}`
+          : `https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20`;
+
+             const response = await axios.get(endpoint);
                 
                 const coursesData = response.data || [];
                 setAllCourses(coursesData);
@@ -99,16 +131,40 @@ const Students = () => {
         fetchCourses();
     }, []);
 
-    const getAllStudents = async (courseId = '', page = 1) => {
+    const getAllStudentsByCourse = async (courseId = '', page = 1) => {
         try {
             setLoading(true);
+            
+            let url = `https://thirdpartyy.runasp.net/api/Students/GetStudents?page=${page}&size=${pagination.size}&courseId=${courseId}`;
+            
+      
+            const response =  await axios.get(url);
+            
+            setStudentsCourse(response.data.items || response.data); // Adjust based on your API response structure
+            setPagination(prev => ({
+                ...prev,
+                total: response.data.totalCount || 0,
+                page: page
+            }));
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+            setError(error.message);
+            console.error("Error fetching students:", error);
+        }
+    }
+       const getAllStudents = async (courseId = '', page = 1) => {
+        try {
+            setLoading(true);
+            
             let url = `https://thirdpartyy.runasp.net/api/Students/GetStudents?page=${page}&size=${pagination.size}`;
             
             if (courseId) {
                 url += `&courseId=${courseId}`;
             }
             
-            const response = await axios.get(url);
+            const response =  await axios.get(url);
+            
             setStudents(response.data.items || response.data); // Adjust based on your API response structure
             setPagination(prev => ({
                 ...prev,
@@ -123,6 +179,7 @@ const Students = () => {
         }
     }
 
+    
 
     const handleStudentsAdded = () => {
         handleCloseAddDialog();
@@ -135,6 +192,7 @@ const Students = () => {
 
     useEffect(() => {
         getAllStudents();
+        getAllStudentsByCourse()
     }, []);
 
 
@@ -330,7 +388,22 @@ const columns = [
             </div>
             
             <div className='mt-4'>
+                {
+                    user.role === "Doctor" ? (
                 <DynamicTable
+                    columns={columns}
+                    data={studentsCourse}
+                    showActions={true}
+                    // pagination={pagination}
+                    onPageChange={handlePageChange}
+                    onRowClick={(row) => console.log('Row clicked:', row)}
+                    onEdit={(row) => handleOpenEditDialog(row)}
+                    onDelete={(row) => handleOpenDeleteDialog(row)}                   
+                     onView={(row) => navigate(`/student/${row.id}`)}
+                    selectable={false}
+                />
+                    ) : (
+                        <DynamicTable
                     columns={columns}
                     data={students}
                     showActions={true}
@@ -342,6 +415,9 @@ const columns = [
                      onView={(row) => navigate(`/student/${row.id}`)}
                     selectable={false}
                 />
+                    )
+                }
+             
             </div>
 
                 <Dialog
