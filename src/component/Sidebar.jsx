@@ -70,8 +70,10 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
     { icon: <FaBook />, text: "Courses", path: "/coursesdr" },
     { icon: <FaFileAlt />, text: "Exams", path: "/exams" },
     { icon: <FaVideo />, text: "Lectures", path: "/lectures" },
-    { icon: <FaUserGraduate />, text: "Students", path: "/students" },
+    { icon: <FaUserGraduate />, text: "Students", path: "/doctor-students" },
     { icon: <FaNewspaper />, text: "Articles", path: "/articles" },
+    { icon: <FaComments />, text: "Chat", path: "/chat" },
+    { icon: <FaBullhorn />, text: "Ads", path: "/ads" },
     { icon: <FaQrcode />, text: "Qr Code", path: "/qr-code" },
   ]
 

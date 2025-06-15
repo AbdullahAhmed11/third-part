@@ -13,104 +13,90 @@ import {
     Select,
     FormControl,
     InputLabel,
-    Alert
+    Alert,
+    Switch,
+    FormControlLabel
 } from '@mui/material';
 import Cookies from 'js-cookie';
 import { jwtDecode } from "jwt-decode";
 
-const AddExamForm = ({ onClose, onSuccess }) => {
-
-
+const AddArticleForm = ({ onClose, onSuccess }) => {
     const getUserInfo = () => {
-      const token = Cookies.get('token');
-      if (!token) return null;
+        const token = Cookies.get('token');
+        if (!token) return null;
     
-      try {
-        const decoded = jwtDecode(token);
-    
-        const name = decoded.Name;
-        const id = decoded.Id;
-        const role = decoded.Role;
-        const image = decoded.Image;
-    
-        return { name, id, role, image };
-      } catch (error) {
-        console.error('Invalid token:', error);
-        return null;
-      }
+        try {
+            const decoded = jwtDecode(token);
+            const name = decoded.Name;
+            const id = decoded.Id;
+            const role = decoded.Role;
+            const image = decoded.Image;
+            return { name, id, role, image };
+        } catch (error) {
+            console.error('Invalid token:', error);
+            return null;
+        }
     };
     
     const user = getUserInfo();
-    
-    
-
-
     const [loading, setLoading] = useState(false);
-    const [coursesLoading, setCoursesLoading] = useState(true);
     const [lecturesLoading, setLecturesLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(null);
     const [courses, setCourses] = useState([]);
     const [lectures, setLectures] = useState([]);
+    const [imageFile, setImageFile] = useState(null);
+
     const [formData, setFormData] = useState({
-        title: '',
-        courseId: '',
-        lectureId: ''
+        Name: '',
+        Descripition: '',
+        LectureId: '',
+        isActive: true
     });
 
+    // Fetch courses on mount
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                setCoursesLoading(true);
-                       const endpoint =
-                        user.role === 'Doctor'
-                          ? `https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20&doctorId=${user.id}`
-                          : `https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20`;
+                setLoading(true);
+                const endpoint = user.role === 'Doctor'
+                    ? `https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20&doctorId=${user.id}`
+                    : `https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20`;
+
+                const response = await axios.get(endpoint);
+                console.log('Courses API Response:', response.data);
                 
-                        const response = await axios.get(endpoint);
-                       
-            
-                // const coursesData = Array.isArray(response.data) ? response.data : [];
-                setCourses(response.data);
+                const coursesData = response.data || [];
+                setCourses(coursesData);
             } catch (err) {
                 console.error('Error fetching courses:', err);
-                setError(err.message || 'Failed to load courses');
+                setError(err.message);
             } finally {
-                setCoursesLoading(false);
+                setLoading(false);
             }
         };
 
         fetchCourses();
-    }, []);
+    }, [user?.id, user?.role]);
 
+    // Fetch lectures when courseId changes
     const fetchLectures = async (courseId) => {
+        if (!courseId) return;
+        
         try {
             setLecturesLoading(true);
             const response = await axios.get(
                 `https://thirdpartyy.runasp.net/api/Lectures/GetLectures?courseId=${courseId}`
             );
-            const lecturesData = Array.isArray(response.data) ? response.data : [];
+            console.log('Lectures API Response:', response.data);
+            
+            const lecturesData = response.data || [];
             setLectures(lecturesData);
+            setFormData(prev => ({ ...prev, LectureId: '' })); // Reset lecture selection
         } catch (err) {
             console.error('Error fetching lectures:', err);
-            setError(err.message || 'Failed to load lectures');
+            setError(err.message);
         } finally {
             setLecturesLoading(false);
-        }
-    };
-
-    const handleCourseChange = (e) => {
-        const { value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            courseId: value,
-            lectureId: '' // Reset lecture selection when course changes
-        }));
-        
-        if (value) {
-            fetchLectures(value);
-        } else {
-            setLectures([]);
         }
     };
 
@@ -122,20 +108,32 @@ const AddExamForm = ({ onClose, onSuccess }) => {
         }));
     };
 
+    const handleCourseChange = (e) => {
+        const courseId = e.target.value;
+        fetchLectures(courseId);
+    };
+
+    const handleImageChange = (e) => {
+        setImageFile(e.target.files[0]);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setError(null);
-        setSuccess(null);
-
+        
         try {
-            // Create FormData object
             const formDataToSend = new FormData();
-            formDataToSend.append('Title', formData.title);
-            formDataToSend.append('LectureId', formData.lectureId);
+            formDataToSend.append('Name', formData.Name);
+            formDataToSend.append('Descripition', formData.Descripition);
+            formDataToSend.append('LectureId', formData.LectureId);
+            formDataToSend.append('isActive', formData.isActive);
+            
+            if (imageFile) {
+                formDataToSend.append('Image', imageFile);
+            }
 
             const response = await axios.post(
-                'https://thirdpartyy.runasp.net/api/Exams/AddExam',
+                'https://thirdpartyy.runasp.net/api/Articles/AddArticle',
                 formDataToSend,
                 {
                     headers: {
@@ -143,21 +141,13 @@ const AddExamForm = ({ onClose, onSuccess }) => {
                     }
                 }
             );
-
-            setSuccess('Exam added successfully!');
-            if (onSuccess) onSuccess(response.data);
             
-            // Reset form after successful submission
-            setFormData({
-                title: '',
-                courseId: '',
-                lectureId: ''
-            });
-            setLectures([]);
-            
+            console.log('Article added:', response.data);
+            onSuccess?.();
+            onClose?.();
         } catch (err) {
-            console.error('Error adding exam:', err);
-            setError(err.response?.data?.message || err.message || 'Failed to add exam');
+            console.error('Error adding article:', err);
+            setError(err.response?.data?.message || err.message);
         } finally {
             setLoading(false);
         }
@@ -167,34 +157,46 @@ const AddExamForm = ({ onClose, onSuccess }) => {
         <>
             <DialogTitle>
                 <Typography variant="h5" component="div">
-                    Add New Exam
+                    Add Article
                 </Typography>
             </DialogTitle>
+
             <DialogContent>
                 <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
                     <Stack spacing={3}>
                         <TextField
                             fullWidth
-                            label="Exam Title"
-                            name="title"
-                            value={formData.title}
+                            label="Article Name"
+                            name="Name"
+                            value={formData.Name}
                             onChange={handleChange}
                             required
                         />
 
+                        <TextField
+                            fullWidth
+                            label="Description"
+                            name="Descripition"
+                            value={formData.Descripition}
+                            onChange={handleChange}
+                            required
+                            multiline
+                            rows={4}
+                        />
+
+                        {/* Course Selection */}
                         <FormControl fullWidth>
                             <InputLabel id="course-select-label">Course</InputLabel>
                             <Select
                                 labelId="course-select-label"
                                 id="course-select"
                                 name="courseId"
-                                value={formData.courseId}
                                 label="Course"
                                 onChange={handleCourseChange}
-                                disabled={coursesLoading}
+                                disabled={loading}
                                 required
                             >
-                                {coursesLoading ? (
+                                {loading ? (
                                     <MenuItem disabled>
                                         <CircularProgress size={24} />
                                         Loading courses...
@@ -211,16 +213,17 @@ const AddExamForm = ({ onClose, onSuccess }) => {
                             </Select>
                         </FormControl>
 
+                        {/* Lecture Selection - only shown when a course is selected */}
                         <FormControl fullWidth>
                             <InputLabel id="lecture-select-label">Lecture</InputLabel>
                             <Select
                                 labelId="lecture-select-label"
                                 id="lecture-select"
-                                name="lectureId"
-                                value={formData.lectureId}
+                                name="LectureId"
+                                value={formData.LectureId}
                                 label="Lecture"
                                 onChange={handleChange}
-                                disabled={lecturesLoading || !formData.courseId}
+                                disabled={lecturesLoading || lectures.length === 0}
                                 required
                             >
                                 {lecturesLoading ? (
@@ -235,18 +238,49 @@ const AddExamForm = ({ onClose, onSuccess }) => {
                                         </MenuItem>
                                     ))
                                 ) : (
-                                    <MenuItem disabled>
-                                        {formData.courseId ? 'No lectures available for this course' : 'Please select a course first'}
-                                    </MenuItem>
+                                    <MenuItem disabled>Select a course first</MenuItem>
                                 )}
                             </Select>
                         </FormControl>
 
-                        {error && (
-                            <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>
+                        {/* Image Upload */}
+                        <Button
+                            variant="outlined"
+                            component="label"
+                            fullWidth
+                        >
+                            Upload Image
+                            <input
+                                type="file"
+                                hidden
+                                accept="image/*"
+                                onChange={handleImageChange}
+                            />
+                        </Button>
+                        {imageFile && (
+                            <Typography variant="body2">
+                                Selected: {imageFile.name}
+                            </Typography>
                         )}
-                        {success && (
-                            <Alert severity="success" sx={{ mt: 2 }}>{success}</Alert>
+
+                        {/* Active Switch */}
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    checked={formData.isActive}
+                                    onChange={(e) => setFormData(prev => ({
+                                        ...prev,
+                                        isActive: e.target.checked
+                                    }))}
+                                    name="isActive"
+                                    color="primary"
+                                />
+                            }
+                            label="Active"
+                        />
+
+                        {error && (
+                            <Alert severity="error">{error}</Alert>
                         )}
                     </Stack>
 
@@ -266,7 +300,7 @@ const AddExamForm = ({ onClose, onSuccess }) => {
                         <Button
                             type="submit"
                             variant="contained"
-                            disabled={loading || !formData.title || !formData.lectureId}
+                            disabled={loading}
                             startIcon={loading ? <CircularProgress size={20} /> : null}
                             sx={{
                                 background: '#1A843C',
@@ -274,13 +308,13 @@ const AddExamForm = ({ onClose, onSuccess }) => {
                                 borderColor: '#EFA61B',
                             }}
                         >
-                            {loading ? 'Adding...' : 'Add Exam'}
+                            {loading ? 'Adding...' : 'Add Article'}
                         </Button>
                     </Box>
                 </Box>
             </DialogContent>
         </>
     );
-}
+};
 
-export default AddExamForm;
+export default AddArticleForm;
