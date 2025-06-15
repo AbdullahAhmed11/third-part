@@ -97,7 +97,7 @@ const Exams = () => {
     // Fetch exams data
     const getAllExams = async () => {
         try {
-            const response = await axios.get(`https://thirdpartyy.runasp.net/api/Exams/GetExams`);
+            const response = await axios.get(`https://thiredparty.runasp.net/api/Exams/GetExams`);
             setExams(response.data);
             setFilteredExams(response.data); // Initialize filtered exams with all data
             setLoading(false);

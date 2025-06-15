@@ -33,7 +33,7 @@ const HomeDR = () => {
     const [courseRequest, setCourseRequest] = useState([])
     const getAllUniversity = async () => {
         try{
-          const response = await axios.get(`https://thirdpartyy.runasp.net/api/Universities/GetUniversities`);
+          const response = await axios.get(`https://thiredparty.runasp.net/api/Universities/GetUniversities`);
           setUniversities(response.data);
           setLoading(false);
           console.log("Universities fetched successfully:", response.data);
@@ -44,7 +44,7 @@ const HomeDR = () => {
     }
     const getAllCourses = async () => {
         try {
-            const response = await axios.get(`https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=10`);
+            const response = await axios.get(`https://thiredparty.runasp.net/api/Courses/GetCourses?page=1&size=10`);
             setCourses(response.data);
             setLoading(false);
             console.log("Courses fetched successfully:", response.data);
@@ -58,7 +58,7 @@ const HomeDR = () => {
 
     const getDashData = async () => {
         try {
-            const response = await axios.get(`https://thirdpartyy.runasp.net/api/Admins/GetStatisticsForAdmin`);
+            const response = await axios.get(`https://thiredparty.runasp.net/api/Admins/GetStatisticsForAdmin`);
             setDashData(response.data);
             setLoading(false);
             console.log("data fetched successfully:", response.data);
@@ -71,7 +71,7 @@ const HomeDR = () => {
 
     const getCourseRequests = async () => {
         try {
-            const response = await axios.get(`https://thirdpartyy.runasp.net/api/CourseRequests/GetCourseRequests?page=1&size=30`);
+            const response = await axios.get(`https://thiredparty.runasp.net/api/CourseRequests/GetCourseRequests?page=1&size=30`);
             setCourseRequest(response.data);
             setLoading(false);
             console.log("data fetched successfully:", response.data);
@@ -120,7 +120,7 @@ const getUserInfo = () => {
 const user = getUserInfo();
 const handleAccept = async (id) => {
   try {
-    await axios.post('https://thirdpartyy.runasp.net/api/CourseRequests/AcceptRequest', { id });
+    await axios.post('https://thiredparty.runasp.net/api/CourseRequests/AcceptRequest', { id });
     toast.success('Request accepted!');
     getCourseRequests(); // refresh
   } catch (err) {
@@ -131,7 +131,7 @@ const handleAccept = async (id) => {
 
 const handleReject = async (id) => {
   try {
-    await axios.delete(`https://thirdpartyy.runasp.net/api/CourseRequests/DeleteRequest?id=${id}`);
+    await axios.delete(`https://thiredparty.runasp.net/api/CourseRequests/DeleteRequest?id=${id}`);
     toast.success('Request rejected!');
     getCourseRequests(); // refresh
   } catch (err) {

@@ -58,7 +58,7 @@ const AddLectureForm = ({ onClose, onSuccess, selectedCourse }) => {
             try {
                 setCoursesLoading(true);
                 const response = await axios.get(
-                    'https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=10&universityId=1&isActive=false'
+                    'https://thiredparty.runasp.net/api/Courses/GetCourses?page=1&size=10&universityId=1&isActive=false'
                 );
                 const coursesData = Array.isArray(response.data) ? response.data : [];
                 setCourses(coursesData);
@@ -94,7 +94,7 @@ const AddLectureForm = ({ onClose, onSuccess, selectedCourse }) => {
             };
 
             const response = await axios.post(
-                'https://thirdpartyy.runasp.net/api/Lectures/AddLecture',
+                'https://thiredparty.runasp.net/api/Lectures/AddLecture',
                 lectureData
             );
 

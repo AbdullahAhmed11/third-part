@@ -16,7 +16,7 @@ const DoctorProfile = () => {
     const getDoctorView = async () => {
       try {
         const response = await axios.get(
-          `https://thirdpartyy.runasp.net/api/Doctors/GetDoctorById?id=${id}`
+          `https://thiredparty.runasp.net/api/Doctors/GetDoctorById?id=${id}`
         );
          setDoctor(response.data);
       } catch (err) {
@@ -49,7 +49,7 @@ const columns = [
     minWidth: 100,
     renderCell: (row) => (
       <img 
-        src={`${`https://thirdpartyy.runasp.net/`}${row.imagePath}`} 
+        src={`${`https://thiredparty.runasp.net/`}${row.imagePath}`} 
         alt={`${row.name} logo`} 
         style={{ 
           width: 50, 
@@ -84,7 +84,7 @@ const columnsCourses = [
         minWidth: 100,
         renderCell: (row) => (
             <img 
-                src={`${'https://thirdpartyy.runasp.net/'}${row.imagePath}`} 
+                src={`${'https://thiredparty.runasp.net/'}${row.imagePath}`} 
                 alt={`${row.name} logo`} 
                 style={{ 
                     width: 50, 
@@ -154,7 +154,7 @@ const columnsCourses = [
 
 const getAlldoctors = async () => {
     try{
-      const response = await axios.get(`https://thirdpartyy.runasp.net/api/Doctors/GetDoctors?page=1&size=10`);
+      const response = await axios.get(`https://thiredparty.runasp.net/api/Doctors/GetDoctors?page=1&size=10`);
       setDoctors(response.data);
       setLoading(false);
       console.log("doctors fetched successfully:", response.data);
@@ -167,7 +167,7 @@ const getAlldoctors = async () => {
 
    const getAllCourses = async () => {
         try {
-            const response = await axios.get(`https://thirdpartyy.runasp.net/api/Courses/GetDoctorCourses?id=${id}`);
+            const response = await axios.get(`https://thiredparty.runasp.net/api/Courses/GetDoctorCourses?id=${id}`);
             setCourses(response.data);
             setLoading(false);
             console.log("Courses fetched successfully:", response.data);
@@ -209,7 +209,7 @@ useEffect(() => {
                {
                 doctor?.imagePath ? (
                     <img
-                    src={`https://thirdpartyy.runasp.net/${doctor?.imagePath}`}
+                    src={`https://thiredparty.runasp.net/${doctor?.imagePath}`}
                     alt={doctor.doctorName}
                     className="w-24 h-24 rounded-full object-cover"
                 />

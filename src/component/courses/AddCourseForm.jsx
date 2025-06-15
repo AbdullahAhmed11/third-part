@@ -40,7 +40,7 @@ const AddCourseForm = ({ onClose, onSuccess }) => {
     const getAlldoctors = async () => {
         try {
             setLoadingDoctors(true);
-            const response = await axios.get(`https://thirdpartyy.runasp.net/api/Doctors/GetDoctors?page=1&size=10`);
+            const response = await axios.get(`https://thiredparty.runasp.net/api/Doctors/GetDoctors?page=1&size=10`);
             setDoctors(response.data);
         } catch (error) {
             console.error("Error fetching doctors:", error);
@@ -106,7 +106,7 @@ const AddCourseForm = ({ onClose, onSuccess }) => {
             }
 
             const response = await axios.post(
-                'https://thirdpartyy.runasp.net/api/Courses/AddCourse',
+                'https://thiredparty.runasp.net/api/Courses/AddCourse',
                 formDataToSend,
                 {
                     headers: {

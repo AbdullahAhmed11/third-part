@@ -41,7 +41,7 @@ const EditStudentForm = ({ student, onClose, onSuccess }) => {
             try {
                 setUniversitiesLoading(true);
                 const response = await axios.get(
-                    'https://thirdpartyy.runasp.net/api/Universities/GetUniversities?page=1&size=10'
+                    'https://thiredparty.runasp.net/api/Universities/GetUniversities?page=1&size=10'
                 );
                 const universitiesData = Array.isArray(response.data) ? response.data : [];
                 setUniversities(universitiesData);
@@ -124,7 +124,7 @@ const EditStudentForm = ({ student, onClose, onSuccess }) => {
             }
 
             const response = await axios.post(
-                `https://thirdpartyy.runasp.net/api/Users/EditUser`,
+                `https://thiredparty.runasp.net/api/Users/EditUser`,
                 formDataToSend,
                 {
                     headers: {

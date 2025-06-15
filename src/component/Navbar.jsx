@@ -54,7 +54,7 @@ const user = getUserInfo();
         </div>
 
         <img
-          src={`https://thirdpartyy.runasp.net${user?.image}`}
+          src={`https://thiredparty.runasp.net/${user?.image}`}
           alt="Profile"
           className="w-10 h-10 rounded-full cursor-pointer object-cover"
         />

@@ -63,7 +63,7 @@ const ExamView = () =>  {
 
     const getAllExamQuestions = async () => {
         try{
-          const response = await axios.get(`https://thirdpartyy.runasp.net/api/Questions/GetExamQuestion?id=${id}`);
+          const response = await axios.get(`https://thiredparty.runasp.net/api/Questions/GetExamQuestion?id=${id}`);
           setQuestions(response.data);
           setLoading(false);
           console.log("Questions fetched successfully:", response.data);
@@ -152,7 +152,7 @@ const columns = [
                 
                 setDeleteLoading(true);
                 try {
-                    await axios.delete(`https://thirdpartyy.runasp.net/api/Questions/Deletequestion/${selectedQuestion.id}`);
+                    await axios.delete(`https://thiredparty.runasp.net/api/Questions/Deletequestion/${selectedQuestion.id}`);
                     getAllExamQuestions(); 
                     handleCloseDeleteDialog();
                 } catch (error) {

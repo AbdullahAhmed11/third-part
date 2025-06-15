@@ -113,8 +113,8 @@ const user = getUserInfo();
                 setLoading(true);
                  const endpoint =
         user.role === 'Doctor'
-          ? `https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20&doctorId=${user.id}`
-          : `https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20`;
+          ? `https://thiredparty.runasp.net/api/Courses/GetCourses?page=1&size=20&doctorId=${user.id}`
+          : `https://thiredparty.runasp.net/api/Courses/GetCourses?page=1&size=20`;
 
              const response = await axios.get(endpoint);
                 
@@ -135,7 +135,7 @@ const user = getUserInfo();
         try {
             setLoading(true);
             
-            let url = `https://thirdpartyy.runasp.net/api/Students/GetStudents?page=${page}&size=${pagination.size}&courseId=${courseId}`;
+            let url = `https://thiredparty.runasp.net/api/Students/GetStudents?page=${page}&size=${pagination.size}&courseId=${courseId}`;
             
       
             const response =  await axios.get(url);
@@ -157,7 +157,7 @@ const user = getUserInfo();
         try {
             setLoading(true);
             
-            let url = `https://thirdpartyy.runasp.net/api/Students/GetStudents?page=${page}&size=${pagination.size}`;
+            let url = `https://thiredparty.runasp.net/api/Students/GetStudents?page=${page}&size=${pagination.size}`;
             
             if (courseId) {
                 url += `&courseId=${courseId}`;
@@ -215,7 +215,7 @@ const columns = [
             minWidth: 100,
             renderCell: (row) => (
                 <img 
-                    src={`${'https://thirdpartyy.runasp.net/'}${row.image}`} 
+                    src={`${'https://thiredparty.runasp.net/'}${row.image}`} 
                     alt={`${row.name} logo`} 
                     style={{ 
                         width: 50, 
@@ -288,7 +288,7 @@ const columns = [
             
             setDeleteLoading(true);
             try {
-                await axios.delete(`https://thirdpartyy.runasp.net/api/Students/DeleteStudent?id=${selectedStudent.id}`);
+                await axios.delete(`https://thiredparty.runasp.net/api/Students/DeleteStudent?id=${selectedStudent.id}`);
                 getAllStudents(); 
                 handleCloseDeleteDialog();
             } catch (error) {

@@ -37,7 +37,7 @@ const CourseLectures = () => {
     const getLectureAndLessons = async () => {
       try {
         const response = await axios.get(
-          `https://thirdpartyy.runasp.net/api/Lectures/GetLecturesAndLessons?courseId=${id}`
+          `https://thiredparty.runasp.net/api/Lectures/GetLecturesAndLessons?courseId=${id}`
         );
          setLectures(response.data);
       } catch (err) {

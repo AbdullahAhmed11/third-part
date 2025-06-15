@@ -34,7 +34,7 @@ const QrCode = () => {
   const fetchQrCodes = async (isUsed) => {
     setLoading(true);
     try {
-      let url = 'https://thirdpartyy.runasp.net/api/QRCodes/GetQrCodes';
+      let url = 'https://thiredparty.runasp.net/api/QRCodes/GetQrCodes';
       
       // Only append the query parameter if filtering by true/false
       if (isUsed !== 'all') {

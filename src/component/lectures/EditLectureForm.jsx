@@ -32,7 +32,7 @@ const EditLectureForm = ({ lecture, onClose, onSuccess }) => {
             try {
                 setCoursesLoading(true);
                 const response = await axios.get(
-                    'https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=10&universityId=1&isActive=false'
+                    'https://thiredparty.runasp.net/api/Courses/GetCourses?page=1&size=10&universityId=1&isActive=false'
                 );
                 setCourses(Array.isArray(response.data) ? response.data : []);
             } catch (err) {
@@ -60,7 +60,7 @@ const EditLectureForm = ({ lecture, onClose, onSuccess }) => {
         
         try {
             const response = await axios.post(
-                'https://thirdpartyy.runasp.net/api/Lectures/EditLecture',
+                'https://thiredparty.runasp.net/api/Lectures/EditLecture',
                 {
                     id: formData.id,
                     title: formData.title

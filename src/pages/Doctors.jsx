@@ -85,7 +85,7 @@ const Doctors = () => {
     minWidth: 100,
     renderCell: (row) => (
       <img 
-        src={`${`https://thirdpartyy.runasp.net/`}${row.imagePath}`} 
+        src={`${`https://thiredparty.runasp.net/`}${row.imagePath}`} 
         alt={`${row.name} logo`} 
         style={{ 
           width: 50, 
@@ -156,7 +156,7 @@ const Doctors = () => {
 //get doctors
 const getAlldoctors = async () => {
     try{
-      const response = await axios.get(`https://thirdpartyy.runasp.net/api/Doctors/GetDoctors?page=1&size=10`);
+      const response = await axios.get(`https://thiredparty.runasp.net/api/Doctors/GetDoctors?page=1&size=10`);
       setDoctors(response.data);
       setLoading(false);
       console.log("doctors fetched successfully:", response.data);
@@ -176,7 +176,7 @@ const getAlldoctors = async () => {
             
             setDeleteLoading(true);
             try {
-                await axios.delete(`https://thirdpartyy.runasp.net/api/Doctors/DeleteDoctor?id=${selectedDoctor.id}`);
+                await axios.delete(`https://thiredparty.runasp.net/api/Doctors/DeleteDoctor?id=${selectedDoctor.id}`);
                 getAlldoctors(); 
                 handleCloseDeleteDialog();
             } catch (error) {

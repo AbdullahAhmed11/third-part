@@ -20,7 +20,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        'https://thirdpartyy.runasp.net/api/Users/Login',
+        'https://thiredparty.runasp.net/api/Users/Login',
         formData,
         {
           headers: {
