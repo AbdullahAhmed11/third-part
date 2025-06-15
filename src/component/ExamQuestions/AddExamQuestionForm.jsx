@@ -104,7 +104,7 @@ const AddExamQuestionForm = ({ onClose, onSuccess }) => {
             }
 
             const response = await axios.post(
-                'https://thirdpartyy.runasp.net/api/Questions/AddQuestion',
+                'https://thiredparty.runasp.net/api/Questions/AddQuestion',
                 formPayload,
                 {
                     headers: {

@@ -33,7 +33,7 @@ const AddCourseLectureForm = ({ onClose, onSuccess }) => {
     const getAllCourses = async () => {
         try {
             setFetchingCourses(true);
-            const response = await axios.get(`https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=10`);
+            const response = await axios.get(`https://thiredparty.runasp.net/api/Courses/GetCourses?page=1&size=10`);
             setCourses(response.data);
             setFetchingCourses(false);
         } catch (error) {
@@ -71,7 +71,7 @@ const AddCourseLectureForm = ({ onClose, onSuccess }) => {
             };
 
             const response = await axios.post(
-                'https://thirdpartyy.runasp.net/api/Lectures/AddLecture',
+                'https://thiredparty.runasp.net/api/Lectures/AddLecture',
                 payload,
                 {
                     headers: {

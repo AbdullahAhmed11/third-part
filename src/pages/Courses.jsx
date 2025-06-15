@@ -78,7 +78,7 @@ const Courses = () => {
             minWidth: 100,
             renderCell: (row) => (
                 <img 
-                    src={`${'https://thirdpartyy.runasp.net/'}${row.imagePath}`} 
+                    src={`${'https://thiredparty.runasp.net/'}${row.imagePath}`} 
                     alt={`${row.name} logo`} 
                     style={{ 
                         width: 50, 
@@ -148,7 +148,7 @@ const Courses = () => {
 
     const getAllCourses = async () => {
         try {
-            const response = await axios.get(`https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=10`);
+            const response = await axios.get(`https://thiredparty.runasp.net/api/Courses/GetCourses?page=1&size=10`);
             setCourses(response.data);
             setFilteredCourses(response.data);
             setLoading(false);
@@ -170,7 +170,7 @@ const Courses = () => {
         
         setDeleteLoading(true);
         try {
-            await axios.delete(`https://thirdpartyy.runasp.net/api/Courses/DeleteCourse/${selectedCourse.id}`);
+            await axios.delete(`https://thiredparty.runasp.net/api/Courses/DeleteCourse/${selectedCourse.id}`);
             getAllCourses();
             handleCloseDeleteDialog();
         } catch (error) {
@@ -195,7 +195,7 @@ const Courses = () => {
 
     const getAlldoctors = async () => {
         try{
-          const response = await axios.get(`https://thirdpartyy.runasp.net/api/Doctors/GetDoctors?page=1&size=10`);
+          const response = await axios.get(`https://thiredparty.runasp.net/api/Doctors/GetDoctors?page=1&size=10`);
           setDoctors(response.data);
           setLoading(false);
           console.log("doctors fetched successfully:", response.data);

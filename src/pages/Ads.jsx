@@ -41,7 +41,7 @@ const Ads = () => {
       try {
         if (user?.id) {
           const response = await axios.get(
-            `https://thirdpartyy.runasp.net/api/Ads/GetAds?id=${user.id}`
+            `https://thiredparty.runasp.net/api/Ads/GetAds?id=${user.id}`
           );
           setAds(response.data);
         }
@@ -83,7 +83,7 @@ const Ads = () => {
     try {
       setUploading(true);
       const response = await axios.post(
-        'https://thirdpartyy.runasp.net/api/Ads/AddAds',
+        'https://thiredparty.runasp.net/api/Ads/AddAds',
         formData,
         {
           headers: {
@@ -94,7 +94,7 @@ const Ads = () => {
 
       // Refresh the ads list
       const adsResponse = await axios.get(
-        `https://thirdpartyy.runasp.net/api/Ads/GetAds?id=${user.id}`
+        `https://thiredparty.runasp.net/api/Ads/GetAds?id=${user.id}`
       );
       setAds(adsResponse.data);
 
@@ -163,7 +163,7 @@ const Ads = () => {
             >
               <div className="h-48 overflow-hidden">
                 <img
-                  src={`https://thirdpartyy.runasp.net${ad.imagePath}`}
+                  src={`https://thiredparty.runasp.net/${ad.imagePath}`}
                   alt={`Ad ${ad.id}`}
                   className="w-full h-full object-cover"
                   onError={(e) => {
@@ -175,7 +175,7 @@ const Ads = () => {
               <div className="p-4">
                 <h3 className="text-lg font-semibold mb-2">Ad #{ad.id}</h3>
                 <div className="flex justify-between items-center">
-                  <Button
+                  {/* <Button
                     variant="outlined"
                     size="small"
                     sx={{
@@ -187,7 +187,7 @@ const Ads = () => {
                     }}
                   >
                     View Details
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </div>

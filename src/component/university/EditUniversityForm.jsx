@@ -97,7 +97,7 @@ const EditUniversityForm = ({ university, onClose, onSuccess }) => {
             formDataToSend.append('Name', formData.name.trim()); // Add university name
 
             const response = await axios.put(
-                'https://thirdpartyy.runasp.net/api/Universities/EditUniversity',
+                'https://thiredparty.runasp.net/api/Universities/EditUniversity',
                 formDataToSend,
                 {
                     headers: {

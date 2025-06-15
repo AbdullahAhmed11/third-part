@@ -48,7 +48,7 @@ const AddQrCodeForm = ({ onClose, onSuccess }) => {
 
             // API call to generate QR codes
             const response = await axios.post(
-                'https://thirdpartyy.runasp.net/api/QRCodes/AddQrCodes',
+                'https://thiredparty.runasp.net/api/QRCodes/AddQrCodes',
                 {
                     price: parseFloat(formData.price),  // Ensure it's a number
                     count: parseInt(formData.count)      // Ensure it's an integer

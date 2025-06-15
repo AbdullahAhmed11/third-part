@@ -59,8 +59,8 @@ const AddArticleForm = ({ onClose, onSuccess }) => {
             try {
                 setLoading(true);
                 const endpoint = user.role === 'Doctor'
-                    ? `https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20&doctorId=${user.id}`
-                    : `https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20`;
+                    ? `https://thiredparty.runasp.net/api/Courses/GetCourses?page=1&size=20&doctorId=${user.id}`
+                    : `https://thiredparty.runasp.net/api/Courses/GetCourses?page=1&size=20`;
 
                 const response = await axios.get(endpoint);
                 console.log('Courses API Response:', response.data);
@@ -85,7 +85,7 @@ const AddArticleForm = ({ onClose, onSuccess }) => {
         try {
             setLecturesLoading(true);
             const response = await axios.get(
-                `https://thirdpartyy.runasp.net/api/Lectures/GetLectures?courseId=${courseId}`
+                `https://thiredparty.runasp.net/api/Lectures/GetLectures?courseId=${courseId}`
             );
             console.log('Lectures API Response:', response.data);
             
@@ -133,7 +133,7 @@ const AddArticleForm = ({ onClose, onSuccess }) => {
             }
 
             const response = await axios.post(
-                'https://thirdpartyy.runasp.net/api/Articles/AddArticle',
+                'https://thiredparty.runasp.net/api/Articles/AddArticle',
                 formDataToSend,
                 {
                     headers: {

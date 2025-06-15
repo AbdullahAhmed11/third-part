@@ -80,7 +80,7 @@ const AddUniversityForm = ({ onClose, onSuccess }) => {
             formDataToSend.append('Name', formData.name);
 
             const response = await axios.post(
-                'https://thirdpartyy.runasp.net/api/Universities/AddUniversity',
+                'https://thiredparty.runasp.net/api/Universities/AddUniversity',
                 formDataToSend,
                 {
                     headers: {

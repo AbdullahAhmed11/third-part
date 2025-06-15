@@ -72,8 +72,8 @@ const Articles = () => {
         try {
             setLoading(true);
             const endpoint = user.role === 'Doctor' ?
-              `https://thirdpartyy.runasp.net/api/Articles/GetArticles?courseId=${selectedCourse}&doctorId=${user?.id}&page=1&size=10` :
-               `https://thirdpartyy.runasp.net/api/Articles/GetArticles?courseId=${selectedCourse}&page=1&size=10` 
+              `https://thiredparty.runasp.net/api/Articles/GetArticles?courseId=${selectedCourse}&doctorId=${user?.id}&page=1&size=10` :
+               `https://thiredparty.runasp.net/api/Articles/GetArticles?courseId=${selectedCourse}&page=1&size=10` 
 
             const response = await axios.get(endpoint);
             
@@ -95,8 +95,8 @@ const Articles = () => {
         try {
             setLoading(true);
             const endpoint = user.role === 'Doctor'
-                ? `https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20&doctorId=${user.id}`
-                : `https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20`;
+                ? `https://thiredparty.runasp.net/api/Courses/GetCourses?page=1&size=20&doctorId=${user.id}`
+                : `https://thiredparty.runasp.net/api/Courses/GetCourses?page=1&size=20`;
 
             const response = await axios.get(endpoint);
             console.log('Courses response:', response.data);
@@ -178,7 +178,7 @@ const Articles = () => {
         
         setDeleteLoading(true);
         try {
-            await axios.delete(`https://thirdpartyy.runasp.net/api/Articles/DeleteArticle/${selectedArticle.id}`);
+            await axios.delete(`https://thiredparty.runasp.net/api/Articles/DeleteArticle/${selectedArticle.id}`);
             fetchArticles(); // Refresh the list
             handleCloseDeleteDialog();
         } catch (error) {

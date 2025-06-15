@@ -93,8 +93,8 @@ const user = getUserInfo();
                 setLoading(true);
            const endpoint =
         user.role === 'Doctor'
-          ? `https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20&doctorId=${user.id}`
-          : `https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20`;
+          ? `https://thiredparty.runasp.net/api/Courses/GetCourses?page=1&size=20&doctorId=${user.id}`
+          : `https://thiredparty.runasp.net/api/Courses/GetCourses?page=1&size=20`;
 
       const response = await axios.get(endpoint);
                 
@@ -118,7 +118,7 @@ const user = getUserInfo();
 
 const getAllLectures = async () => {
     try{
-      const response = await axios.get(`https://thirdpartyy.runasp.net/api/Lectures/GetLectures?courseId=${selectedCourse}`);
+      const response = await axios.get(`https://thiredparty.runasp.net/api/Lectures/GetLectures?courseId=${selectedCourse}`);
       setLectures(response.data);
       setLoading(false);
       console.log("lectures fetched successfully:", response.data);
@@ -149,7 +149,7 @@ const getAllLectures = async () => {
         
         setDeleteLoading(true);
         try {
-            await axios.delete(`https://thirdpartyy.runasp.net/api/Lectures/DeleteLecture/${selectedLecture.id}`);
+            await axios.delete(`https://thiredparty.runasp.net/api/Lectures/DeleteLecture/${selectedLecture.id}`);
             getAllLectures(); // Refresh the list
             handleCloseDeleteDialog();
         } catch (error) {

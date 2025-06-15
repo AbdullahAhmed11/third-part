@@ -81,7 +81,7 @@ const columns = [
     minWidth: 100,
     renderCell: (row) => (
       <img 
-        src={`${`https://thirdpartyy.runasp.net/`}${row.imagePath}`} 
+        src={`${`https://thiredparty.runasp.net/`}${row.imagePath}`} 
         alt={`${row.name} logo`} 
         style={{ 
           width: 50, 
@@ -155,7 +155,7 @@ const columns = [
 
 const getAllUniversity = async () => {
     try{
-      const response = await axios.get(`https://thirdpartyy.runasp.net/api/Universities/GetUniversities`);
+      const response = await axios.get(`https://thiredparty.runasp.net/api/Universities/GetUniversities`);
       setUniversities(response.data);
       setLoading(false);
       console.log("Universities fetched successfully:", response.data);
@@ -174,7 +174,7 @@ const getAllUniversity = async () => {
         
         setDeleteLoading(true);
         try {
-            await axios.delete(`https://thirdpartyy.runasp.net/api/Universities/DeleteUniversity?id=${selectedUniversity.id}`);
+            await axios.delete(`https://thiredparty.runasp.net/api/Universities/DeleteUniversity?id=${selectedUniversity.id}`);
             getAllUniversity(); // Refresh the list
             handleCloseDeleteDialog();
         } catch (error) {

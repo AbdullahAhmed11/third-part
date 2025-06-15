@@ -35,7 +35,7 @@ const StudentView = () => {
     const getStudentView = async () => {
       try {
         const response = await axios.get(
-          `https://thirdpartyy.runasp.net/api/Students/GetStudent?id=${id}`
+          `https://thiredparty.runasp.net/api/Students/GetStudent?id=${id}`
         );
          setStudent(response.data);
       } catch (err) {
@@ -50,7 +50,7 @@ const StudentView = () => {
 
      const getMyCourses = async () => {
         try {
-            const response = await axios.get(`https://thirdpartyy.runasp.net/api/Students/GetMyCourses?id=${id}`);
+            const response = await axios.get(`https://thiredparty.runasp.net/api/Students/GetMyCourses?id=${id}`);
             setCourses(response.data);
             setLoading(false);
             console.log("Courses fetched successfully:", response.data);
@@ -64,7 +64,7 @@ const StudentView = () => {
 
     const getAllCourses = async () => {
         try {
-            const response = await axios.get(`https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=10`);
+            const response = await axios.get(`https://thiredparty.runasp.net/api/Courses/GetCourses?page=1&size=10`);
             setAllCourses(response.data);
             setLoading(false);
             console.log("Courses fetched successfully:", response.data);
@@ -101,7 +101,7 @@ const columnsCourses = [
         minWidth: 100,
         renderCell: (row) => (
             <img 
-                src={`${'https://thirdpartyy.runasp.net/'}${row.imagePath}`} 
+                src={`${'https://thiredparty.runasp.net/'}${row.imagePath}`} 
                 alt={`${row.name} logo`} 
                 style={{ 
                     width: 50, 
@@ -201,7 +201,7 @@ const columnsCourses = [
       };
 
       await axios.post(
-        'https://thirdpartyy.runasp.net/api/Students/BuyCourse',
+        'https://thiredparty.runasp.net/api/Students/BuyCourse',
         payload
       );
 
@@ -261,7 +261,7 @@ const columnsCourses = [
               <div className="w-1/3 flex flex-col gap-5">
                 <div className="bg-white p-5 rounded-lg shadow-md flex items-center gap-5">
                   <div>
-                      <img src={`https://thirdpartyy.runasp.net${student?.image}`} alt="Student" className="w-32 h-32 rounded-full" />
+                      <img src={`https://thiredparty.runasp.net${student?.image}`} alt="Student" className="w-32 h-32 rounded-full" />
                   </div>
                   <div className="flex flex-col gap-2">
                       <span className="font-bold text-[16px]">{student?.name}</span>
@@ -305,7 +305,7 @@ const columnsCourses = [
                           </DialogTitle>
                           <DialogContent>
                               <DialogContentText id="alert-dialog-description" sx={{ fontSize: '16px', fontWeight: '500', color: "#787878" }}>
-                                <img src={`https://thirdpartyy.runasp.net${student.imageId}`} alt="Student" className="w-full h-full " />
+                                <img src={`https://thiredparty.runasp.net${student.imageId}`} alt="Student" className="w-full h-full " />
                               </DialogContentText>
                           </DialogContent>
                   

@@ -19,7 +19,7 @@ const Home = () => {
     const [error, setError] = React.useState(null);
     const getAllUniversity = async () => {
         try{
-          const response = await axios.get(`https://thirdpartyy.runasp.net/api/Universities/GetUniversities`);
+          const response = await axios.get(`https://thiredparty.runasp.net/api/Universities/GetUniversities`);
           setUniversities(response.data);
           setLoading(false);
           console.log("Universities fetched successfully:", response.data);
@@ -30,7 +30,7 @@ const Home = () => {
     }
     const getAllCourses = async () => {
         try {
-            const response = await axios.get(`https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=10`);
+            const response = await axios.get(`https://thiredparty.runasp.net/api/Courses/GetCourses?page=1&size=10`);
             setCourses(response.data);
             setLoading(false);
             console.log("Courses fetched successfully:", response.data);
@@ -73,7 +73,7 @@ const columns = [
     minWidth: 100,
     renderCell: (row) => (
       <img 
-        src={`${`https://thirdpartyy.runasp.net/`}${row.imagePath}`} 
+        src={`${`https://thiredparty.runasp.net/`}${row.imagePath}`} 
         alt={`${row.name} logo`} 
         style={{ 
           width: 50, 
@@ -130,7 +130,7 @@ const columns = [
             minWidth: 100,
             renderCell: (row) => (
                 <img 
-                    src={`${'https://thirdpartyy.runasp.net/'}${row.imagePath}`} 
+                    src={`${'https://thiredparty.runasp.net/'}${row.imagePath}`} 
                     alt={`${row.name} logo`} 
                     style={{ 
                         width: 50, 

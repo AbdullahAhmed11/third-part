@@ -26,7 +26,7 @@ const LectureLesson = () => {
 
         const getAllLessons = async () => {
         try {
-            const response = await axios.get(`https://thirdpartyy.runasp.net/api/Lessons/GetLessonsByLecture?id=${id}`);
+            const response = await axios.get(`https://thiredparty.runasp.net/api/Lessons/GetLessonsByLecture?id=${id}`);
             setLessons(response.data);
             setLoading(false);
             console.log("lessons fetched successfully:", response.data);

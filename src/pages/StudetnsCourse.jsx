@@ -35,7 +35,7 @@ const StudetnsCourse = () => {
         try {
             setLoading(true);
             const response = await axios.get(
-                `https://thirdpartyy.runasp.net/api/Students/GetStudents?courseId=${id}&page=1&size=10`
+                `https://thiredparty.runasp.net/api/Students/GetStudents?courseId=${id}&page=1&size=10`
             );
             
             setStudents(response.data);
@@ -69,7 +69,7 @@ const StudetnsCourse = () => {
             minWidth: 100,
             renderCell: (row) => (
                 <img 
-                    src={`${'https://thirdpartyy.runasp.net/'}${row.image}`} 
+                    src={`${'https://thiredparty.runasp.net/'}${row.image}`} 
                     alt={`${row.name} logo`} 
                     style={{ 
                         width: 50, 

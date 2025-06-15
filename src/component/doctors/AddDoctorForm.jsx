@@ -36,7 +36,7 @@ const AddDoctorForm = ({ onClose, onSuccess }) => {
 
     const getAllUniversities = async () => {
         try {
-            const response = await axios.get(`https://thirdpartyy.runasp.net/api/Universities/GetUniversities`);
+            const response = await axios.get(`https://thiredparty.runasp.net/api/Universities/GetUniversities`);
             setUniversities(response.data);
             setLoadingUniversities(false);
         } catch (error) {
@@ -105,7 +105,7 @@ const AddDoctorForm = ({ onClose, onSuccess }) => {
             }
 
             const response = await axios.post(
-                'https://thirdpartyy.runasp.net/api/Doctors/AddDoctor',
+                'https://thiredparty.runasp.net/api/Doctors/AddDoctor',
                 formDataToSend,
                 {
                     headers: {

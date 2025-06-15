@@ -111,8 +111,8 @@ const DoctorStudents = () => {
                 setLoading(true);
                  const endpoint =
         user.role === 'Doctor'
-          ? `https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20&doctorId=${user.id}`
-          : `https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20`;
+          ? `https://thiredparty.runasp.net/api/Courses/GetCourses?page=1&size=20&doctorId=${user.id}`
+          : `https://thiredparty.runasp.net/api/Courses/GetCourses?page=1&size=20`;
 
              const response = await axios.get(endpoint);
                 
@@ -141,7 +141,7 @@ const DoctorStudents = () => {
     const getAllStudentsByCourse = async () => {
         try {
             if(selectedCourse) {
-                const response = await axios.get(`https://thirdpartyy.runasp.net/api/Students/GetStudents?courseId=${selectedCourse}&page=1&size=30`)
+                const response = await axios.get(`https://thiredparty.runasp.net/api/Students/GetStudents?courseId=${selectedCourse}&page=1&size=30`)
                 setStudentsCourse(response.data)
             }
         }catch(error) {
@@ -171,7 +171,7 @@ const DoctorStudents = () => {
             minWidth: 100,
             renderCell: (row) => (
                 <img 
-                    src={`${'https://thirdpartyy.runasp.net/'}${row.image}`} 
+                    src={`${'https://thiredparty.runasp.net/'}${row.image}`} 
                     alt={`${row.name} logo`} 
                     style={{ 
                         width: 50, 
@@ -246,7 +246,7 @@ const DoctorStudents = () => {
                 
                 setDeleteLoading(true);
                 try {
-                    await axios.delete(`https://thirdpartyy.runasp.net/api/Students/DeleteStudent?id=${selectedStudent.id}`);
+                    await axios.delete(`https://thiredparty.runasp.net/api/Students/DeleteStudent?id=${selectedStudent.id}`);
                     getAllStudents(); 
                     handleCloseDeleteDialog();
                 } catch (error) {

@@ -64,8 +64,8 @@ const AddExamForm = ({ onClose, onSuccess }) => {
                 setCoursesLoading(true);
                        const endpoint =
                         user.role === 'Doctor'
-                          ? `https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20&doctorId=${user.id}`
-                          : `https://thirdpartyy.runasp.net/api/Courses/GetCourses?page=1&size=20`;
+                          ? `https://thiredparty.runasp.net/api/Courses/GetCourses?page=1&size=20&doctorId=${user.id}`
+                          : `https://thiredparty.runasp.net/api/Courses/GetCourses?page=1&size=20`;
                 
                         const response = await axios.get(endpoint);
                        
@@ -87,7 +87,7 @@ const AddExamForm = ({ onClose, onSuccess }) => {
         try {
             setLecturesLoading(true);
             const response = await axios.get(
-                `https://thirdpartyy.runasp.net/api/Lectures/GetLectures?courseId=${courseId}`
+                `https://thiredparty.runasp.net/api/Lectures/GetLectures?courseId=${courseId}`
             );
             const lecturesData = Array.isArray(response.data) ? response.data : [];
             setLectures(lecturesData);
@@ -135,7 +135,7 @@ const AddExamForm = ({ onClose, onSuccess }) => {
             formDataToSend.append('LectureId', formData.lectureId);
 
             const response = await axios.post(
-                'https://thirdpartyy.runasp.net/api/Exams/AddExam',
+                'https://thiredparty.runasp.net/api/Exams/AddExam',
                 formDataToSend,
                 {
                     headers: {
