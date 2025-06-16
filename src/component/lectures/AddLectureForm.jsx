@@ -58,8 +58,9 @@ const AddLectureForm = ({ onClose, onSuccess, selectedCourse }) => {
             try {
                 setCoursesLoading(true);
                 const response = await axios.get(
-                    'https://thiredparty.runasp.net/api/Courses/GetCourses?page=1&size=10&universityId=1&isActive=false'
+                    'https://thiredparty.runasp.net/api/Courses/GetCourses?page=1&size=10'
                 );
+
                 const coursesData = Array.isArray(response.data) ? response.data : [];
                 setCourses(coursesData);
             } catch (err) {
@@ -147,7 +148,7 @@ const AddLectureForm = ({ onClose, onSuccess, selectedCourse }) => {
                                 ) : courses.length > 0 ? (
                                     courses.map((course) => (
                                         <MenuItem key={course.id} value={course.id}>
-                                            {course.name || `Course ${course.id}`}
+                                            {course.title || `Course ${course.id}`}
                                         </MenuItem>
                                     ))
                                 ) : (
