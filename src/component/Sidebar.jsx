@@ -58,7 +58,7 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
     { icon: <FaVideo />, text: "Lectures", path: "/lectures" },
     { icon: <FaUserGraduate />, text: "Students", path: "/students" },
     { icon: <FaNewspaper />, text: "Articles", path: "/articles" },
-    { icon: <FaDoorOpen />, text: "Rooms", path: "/rooms" },
+    // { icon: <FaDoorOpen />, text: "Rooms", path: "/rooms" },
     { icon: <FaComments />, text: "Chat", path: "/chat" },
     { icon: <FaBullhorn />, text: "Ads", path: "/ads" },
     { icon: <FaQrcode />, text: "Qr Code", path: "/qr-code" },
