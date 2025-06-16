@@ -17,6 +17,8 @@ const Home = () => {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState(null);
+    const [dashData, setDashData] = useState(null)
+  
     const getAllUniversity = async () => {
         try{
           const response = await axios.get(`https://thiredparty.runasp.net/api/Universities/GetUniversities`);
@@ -40,10 +42,24 @@ const Home = () => {
             console.error("Error fetching courses:", error);
         }
     };
+
+    const getDashData = async () => {
+            try {
+                const response = await axios.get(`https://thiredparty.runasp.net/api/Admins/GetStatisticsForAdmin`);
+                setDashData(response.data);
+                setLoading(false);
+                console.log("data fetched successfully:", response.data);
+            } catch (error) {
+                setError(error.message);
+                setLoading(false);
+                console.error("Error fetching data:", error);
+            }
+        };
     useEffect(() => {
         setLoading(true); 
         getAllUniversity();
         getAllCourses();
+        getDashData()
     }, []);
 
   if (loading) {
@@ -195,51 +211,55 @@ if (user) {
   console.log('Role:', user.role);
   console.log('Image:', user.image);
 }
+
+    
+ 
+
   return (
     <div className='flex flex-col gap-5'>
-      <h1 className='text-[50px] font-bold'><h1>{t('home.dashboard')}</h1></h1>
-      <div className='grid grid-cols-4 gap-5'>
-        <div className='bg-white p-5 flex justify-between rounded-lg shadow-md'>
-          <div className='flex flex-col justify-between'>
-            <p className='font-meduim text-[16px] text-[#202224]'>Total Students</p>
-            <p className='font-bold text-[24px] text-[#202224]'>40,689</p>
-            <p className='font-bold text-[20px] text-[#202224]'>1.3% Up from past month</p>
+    <h1 className='text-[50px] font-bold'>Dashboard</h1>
+        <div className='grid grid-cols-4 gap-5'>
+          <div className='bg-white p-5 flex justify-between rounded-lg shadow-md'>
+            <div className='flex flex-col justify-between'>
+              <p className='font-meduim text-[16px] text-[#202224]'>Total Students</p>
+              <p className='font-bold text-[24px] text-[#202224]'>{dashData?.students}</p>
+              <p className='font-bold text-[20px] text-[#202224]'>1.3% Up from past month</p>
+            </div>
+            <div className='bg-[#8280FF] w-[60px] h-[60px] rounded-[16px] flex items-center justify-center'>
+              <BiSolidGroup className='text-[40px] text-[#3D42DF]' />
+            </div>
           </div>
-          <div className='bg-[#8280FF] w-[60px] h-[60px] rounded-[16px] flex items-center justify-center'>
-            <BiSolidGroup className='text-[40px] text-[#3D42DF]' />
+          <div className='bg-white p-5 flex justify-between rounded-lg shadow-md'>
+            <div className='flex flex-col justify-between'>
+              <p className='font-meduim text-[16px] text-[#202224]'>Total universities</p>
+              <p className='font-bold text-[24px] text-[#202224]'>{dashData?.universities}</p>
+              <p className='font-bold text-[20px] text-[#202224]'>1.3% Up from past month</p>
+            </div>
+            <div className='bg-[] w-[60px] h-[60px] rounded-[16px] flex items-center justify-center'>
+              <BsFillBoxFill className='text-[40px] text-[#EFA61B]' />
+            </div>
+          </div>
+          <div className='bg-white p-5 flex justify-between rounded-lg shadow-md'>
+            <div className='flex flex-col justify-between'>
+              <p className='font-meduim text-[16px] text-[#202224]'>Total Doctors</p>
+              <p className='font-bold text-[24px] text-[#202224]'>{dashData?.doctors}</p>
+              <p className='font-bold text-[20px] text-[#202224]'>1.3% Up from past month</p>
+            </div>
+            <div className='bg-[] w-[60px] h-[60px] rounded-[16px] flex items-center justify-center'>
+              <BsMailbox2Flag className='text-[40px] text-[#841A62]' />
+            </div>
+          </div>
+          <div className='bg-white p-5 flex justify-between rounded-lg shadow-md'>
+            <div className='flex flex-col justify-between'>
+              <p className='font-meduim text-[16px] text-[#202224]'>Total Courses</p>
+              <p className='font-bold text-[24px] text-[#202224]'>{dashData?.courses}</p>
+              <p className='font-bold text-[20px] text-[#202224]'>1.3% Up from past month</p>
+            </div>
+            <div className='bg-[] w-[60px] h-[60px] rounded-[16px] flex items-center justify-center'>
+              <TbBrandYoutubeFilled className='text-[40px] text-[#F54135]' />
+            </div>
           </div>
         </div>
-        <div className='bg-white p-5 flex justify-between rounded-lg shadow-md'>
-          <div className='flex flex-col justify-between'>
-            <p className='font-meduim text-[16px] text-[#202224]'>Total universities</p>
-            <p className='font-bold text-[24px] text-[#202224]'>24</p>
-            <p className='font-bold text-[20px] text-[#202224]'>1.3% Up from past month</p>
-          </div>
-          <div className='bg-[] w-[60px] h-[60px] rounded-[16px] flex items-center justify-center'>
-            <BsFillBoxFill className='text-[40px] text-[#EFA61B]' />
-          </div>
-        </div>
-        <div className='bg-white p-5 flex justify-between rounded-lg shadow-md'>
-          <div className='flex flex-col justify-between'>
-            <p className='font-meduim text-[16px] text-[#202224]'>Total Doctors</p>
-            <p className='font-bold text-[24px] text-[#202224]'>401</p>
-            <p className='font-bold text-[20px] text-[#202224]'>1.3% Up from past month</p>
-          </div>
-          <div className='bg-[] w-[60px] h-[60px] rounded-[16px] flex items-center justify-center'>
-            <BsMailbox2Flag className='text-[40px] text-[#841A62]' />
-          </div>
-        </div>
-        <div className='bg-white p-5 flex justify-between rounded-lg shadow-md'>
-          <div className='flex flex-col justify-between'>
-            <p className='font-meduim text-[16px] text-[#202224]'>Total Courses</p>
-            <p className='font-bold text-[24px] text-[#202224]'>123</p>
-            <p className='font-bold text-[20px] text-[#202224]'>1.3% Up from past month</p>
-          </div>
-          <div className='bg-[] w-[60px] h-[60px] rounded-[16px] flex items-center justify-center'>
-            <TbBrandYoutubeFilled className='text-[40px] text-[#F54135]' />
-          </div>
-        </div>
-      </div>
 
       <div className='w-full grid grid-cols-2 gap-5'>
         <div className='w-full  bg-white rounded-lg shadow-md p-5 flex flex-col gap-5'>
